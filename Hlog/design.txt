@@ -1,0 +1,146 @@
+IndividualCenter.php{
+	if(login){
+		TopGuide{//1
+			logo;
+			icon;
+			"welcome"+name;
+			writeBlog;
+			newInfo;//go to the page by infoType
+			search;
+			select{
+				blogIndex;
+				loguot;
+			}
+		}
+		SelfInformation{//2
+			info{
+				[]={name,icon,visitorNum,followerNum,followingNum};
+				settings;
+			}
+			weather{
+				//how to do?
+			}
+			dateAndTime{
+				mouseover.show(calander);//how to do?
+			}
+			Add{
+				select[]={blog,fellings,photos,music,video;};
+			}
+		}
+
+		Guide{//3
+			bigGuide{
+				//mouseover.show(smallGuide);
+				writings{
+					blog;
+					fellings;
+					photos;
+					music;
+					video;
+				}
+				relation{
+					followers;
+					following;
+					closeFriends;
+					visitor;
+					visited;
+				}
+				interaction{
+					comment;
+					retransmission;
+					collect;
+					message;
+					letter;
+				}
+				newInfo;
+				settings;
+			}
+			recommand{
+				//get hottest blog from mysql;
+			}
+		}
+		mainPart{//4
+			//name-words-time-comment;
+			//get new dynamic from mysql
+		}
+		AD_Announcement{//5
+			//random AD from mysql;
+			//write announcement;
+		}
+		
+	}
+	else if(noLogin){
+		TopGuide{
+			logo;
+			search;
+			login;
+			register;
+		}
+		//go to this blog index as a visitor;
+	}
+}
+
+Index.php{
+	bigTitle{
+		register;
+		login;
+	}
+	random{
+		blog;
+		photos;
+		music;
+		video;
+	}
+}
+
+register.php{
+	save to mysql{userlogin,userInfo,userSettings};
+	identifyingCode;
+}
+
+
+
+database=hlog;
+tables[]={
+		userLogin,userInfo,userSettings,
+		blog,fellings,music,video,photos,
+		recommand,
+		following,closeFriends,visitLog,visitNum,
+		readNum,comment,retransmission,collect,message,letter,
+		newDynamic,
+		newInfo,
+	};
+	
+userLogin[]={userID,username,password,signDate}
+userInfo[]={userID,name,gender,birthDate,email,
+	icon,signature}
+userSettings[]={userID,background}
+
+blog[]={id,title,author,article,addTime,genre}
+fellings[]={id,author,article,addTime}
+music[]={id,author,name,src,addTime}
+photos[]={id,author,name,src,addTime}
+video[]={id,author,name,src,addTime}
+
+recommand[]={userID,ObType,relyID}
+
+following[]={userID,following}
+closeFriends[]{userID,Friends}
+visitLog[]={userID,visitor,visitTime}
+visitNum[]={userID,num}
+
+readNum[]={ObType,relyID,num}
+comment[]={id,visitor,content,addTime,reply,
+	ObType,relyID,haveRead(default"NO")}
+retransmission[]={id,visitor,content,addTime,
+ObType,relyID}
+collect[]={id,visitor,addTime,ObType,relyID}
+message[]={id,userID,visitor,content,addTime,
+reply,haveRead}
+letter[]={id,userID,visitor,content,addTime,haveRead}
+
+
+newInfo[]={id,userID,infoType,addTime}
+
+
+
