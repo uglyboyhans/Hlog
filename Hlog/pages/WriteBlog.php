@@ -19,7 +19,7 @@ if ($login_name === "" || $login_name === NULL) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>HLog - create</title>
+        <title>Hlog - create</title>
         <script src="../ckeditor/ckeditor.js"></script>
     </head>
     <body>
@@ -48,7 +48,7 @@ if ($login_name === "" || $login_name === NULL) {
             $article = $_POST["article"];
             $genre = $_POST["genre"];
             //save the blog into mysql:
-            $con = mysql_connect("localhost", "root", "aishangni520");
+            $con = mysql_connect("localhost", "loguser", "uglyboy");
             if (!$con) {
                 die("Failed to connect:" . mysql_error());
             } else {

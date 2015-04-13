@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>HLog - login</title>
+        <title>Hlog - login</title>
     </head>
     <body>
         <div align="center">
@@ -22,7 +22,7 @@ and open the template in the editor.
             }
             //get right name & password from db:
             if ($input_name != "") {
-                $con = mysql_connect("localhost", "root", "aishangni520");
+                $con = mysql_connect("localhost", "loguser", "uglyboy");
                 if (!$con) {
                     die("Could not connect" . mysql_error());
                 } else {
@@ -43,7 +43,17 @@ and open the template in the editor.
                             echo "<script>alert('Wrong password!');</script>";
                         } else {
                             session_start();
-                            $_SESSION["login"] = $input_name;
+                            $query = "select userID from userlogin where username = '$login_name'";
+                            $result = mysql_query($query, $con);
+                            while ($row1 = mysql_fetch_array($result)) {
+                                $userID = $row1['userID'];
+                            }
+                            $query = "select name from userInfo where userID = '$userID'";
+                            $result = mysql_query($query, $con);
+                            while ($row1 = mysql_fetch_array($result)) {
+                                $name = $row1['name'];
+                            }
+                            $_SESSION["login"] = $name;
                             echo "<script>"
                             . "location.href='center.php'"
                             . "</script>";

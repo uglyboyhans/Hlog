@@ -93,11 +93,20 @@ Index.php{
 	}
 }
 
-register.php{
+register.php{//done
 	save to mysql{userlogin,userInfo,userSettings};
 	identifyingCode;
 }
 
+readblog{
+	show from mysql;
+	show comment(Num),readNum,retransmissionNum;
+	form(comment);
+	if(admin){
+		edit;
+		reply;
+	}
+}
 
 
 database=hlog;

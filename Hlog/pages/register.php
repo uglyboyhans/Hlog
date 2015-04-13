@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>HLog - sign up</title>
+        <title>Hlog - sign up</title>
     </head>
 
     <body onload="enableSubmit()">
@@ -46,7 +46,7 @@ and open the template in the editor.
             }
             //connect mysql:
             if ($username != "" && $password != "") {
-                $con = mysql_connect("localhost", "root", "aishangni520");
+                $con = mysql_connect("localhost", "loguser", "uglyboy");;
                 if (!$con) {
                     die("Failed to connect:" . mysql_error());
                 } else {

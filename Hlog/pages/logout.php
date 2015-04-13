@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>HLog - logout</title>
+        <title>Hlog - logout</title>
     </head>
     <body>
         <?php
