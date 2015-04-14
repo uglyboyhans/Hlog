@@ -31,7 +31,7 @@ if ($login_name === "" || $login_name === NULL) {
         <?php
         $isAdmin = false;
         $q = $_GET["q"];
-        $con = mysql_connect("localhost","loguser","uglyboy");
+        $con = mysql_connect("localhost", "loguser", "uglyboy");
         if (!$con) {
             die("Failed to connect:" . mysql_error());
         } else {
@@ -40,7 +40,7 @@ if ($login_name === "" || $login_name === NULL) {
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 echo "<h2>" . $row['title'] . "</h2>";
-                $query = "select name from userInfo where userID =".$row['author'];
+                $query = "select name from userInfo where userID =" . $row['author'];
                 $result = mysql_query($query, $con);
                 while ($row1 = mysql_fetch_array($result)) {
                     $author = $row1['name'];
@@ -52,8 +52,8 @@ if ($login_name === "" || $login_name === NULL) {
                     $isAdmin = true;
                     echo "<p><select>"
                     . "<option value='manage'>manage</option>"
-                    . "<option value='edit' onclick='editBlog(".$q.")'>edit</option>"
-                    . "<option value='delete' onclick='deleteBlog(".$q.")'>delete</option>"
+                    . "<option value='edit' onclick='editBlog(" . $q . ")'>edit</option>"
+                    . "<option value='delete' onclick='deleteBlog(" . $q . ")'>delete</option>"
                     . "</select></p>";
                 }
             }
@@ -63,7 +63,12 @@ if ($login_name === "" || $login_name === NULL) {
             $result_comment = mysql_query($query, $con);
             if (!empty($result_comment)) {
                 while ($row_comment = mysql_fetch_array($result_comment)) {
-                    echo $row_comment['visitor'] . " says:<br />";
+                    $query = "select name from userInfo where userID =" . $row_comment['visitor'] ;
+                    $result = mysql_query($query, $con);
+                    while ($row1 = mysql_fetch_array($result)) {
+                        $visitor = $row1['name'];
+                    }
+                    echo $visitor . " says:<br />";
                     echo $row_comment['content'] . "<br />";
                     echo "at " . $row_comment['addtime'] . "<br />";
                     if (!empty($row_comment['reply'])) {              //in case it's NULL
@@ -73,12 +78,11 @@ if ($login_name === "" || $login_name === NULL) {
                         echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
                         echo "<button onclick='deleteComment(" . $row_comment['id'] . ")'>delete</button>";
                         echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
-                        . "<form action='manage/reply.php' method='post'>"
+                        . "<form action='../manage/reply.php' method='post'>"
                         . "<input type='hidden' name='id' value=" . $row_comment['id'] . " />"
                         . "<textarea cols='22' rows='3' name='reply'></textarea>"
                         . "<input type='submit' value='reply' />"
                         . "</form>"
-                        . "test~~~"
                         . "</div>";
                     }
                     echo "<p>------------------------------</p>";
@@ -94,7 +98,7 @@ if ($login_name === "" || $login_name === NULL) {
             <input type="hidden" value="blog" name="ObType" />
         </form>
         <br /><a href="center.php">Center</a>
-        <script src="js/manage.js"></script>
+        <script src="../js/manage.js"></script>
     </body>
 </html>
 

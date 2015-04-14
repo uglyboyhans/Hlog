@@ -39,11 +39,16 @@ if ($login_name === "" || $login_name === NULL) {
             } else {
                 mysql_select_db("hlog");
                 $query = "select id,title,addtime,author from blog";
-                $result = mysql_query($query,$con);
+                $result = mysql_query($query, $con);
                 while ($row = mysql_fetch_array($result)) {
+                    $query = "select name from userInfo where userID =" . $row['author'];
+                    $result1 = mysql_query($query, $con);
+                    while ($row1 = mysql_fetch_array($result1)) {
+                        $author = $row1['name'];
+                    }
                     echo "<p>-------------------------------------</p>";
                     echo "<span onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</span>";
-                    echo "--------" . $row['author'] . "--------" . $row['addtime'];
+                    echo "--------" . $author . "--------" . $row['addtime'];
                 }
                 mysql_close($con);
             }

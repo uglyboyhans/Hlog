@@ -37,13 +37,13 @@ and open the template in the editor.
                         $result = mysql_query($query, $con);
                         while ($row = mysql_fetch_array($result)) {
                             $password = $row['password'];
-                            mysql_close($con);
+                            
                         }
                         if ($input_pass != $password) {
                             echo "<script>alert('Wrong password!');</script>";
                         } else {
                             session_start();
-                            $query = "select userID from userlogin where username = '$login_name'";
+                            $query = "select userID from userlogin where username = '$input_name'";
                             $result = mysql_query($query, $con);
                             while ($row1 = mysql_fetch_array($result)) {
                                 $userID = $row1['userID'];
@@ -53,6 +53,7 @@ and open the template in the editor.
                             while ($row1 = mysql_fetch_array($result)) {
                                 $name = $row1['name'];
                             }
+                            mysql_close($con);
                             $_SESSION["login"] = $name;
                             echo "<script>"
                             . "location.href='center.php'"
