@@ -4,22 +4,28 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <?php
 session_start();
-$login_name = $_SESSION["login"];
+$login_ID = $_SESSION["login"];
 
-if ($login_name === "" || $login_name === NULL) {
+if ($login_ID === "" || $login_ID === NULL) {
     echo "<script>"
     . "location.href='login.php';"
     . "</script>";
 } else {
-    echo "Welcome: " . $login_name . " ! <a href='logout.php'>logout</a><br />";
+    $con = mysql_connect("localhost", "loguser", "uglyboy");
+    if (!$con) {
+        die("Could not connect" . mysql_error());
+    } else {
+        mysql_select_db("hlog");
+        $query = "select name from userInfo where userID=".$login_ID;
+        $result = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result)) {
+            $name=$row["name"];
+        }
+        mysql_close($con);
+    }
+    echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
 }
 ?>
 <html>
@@ -40,6 +46,7 @@ if ($login_name === "" || $login_name === NULL) {
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 echo "<h2>" . $row['title'] . "</h2>";
+                //get name because $row['author'] is author's ID:
                 $query = "select name from userInfo where userID =" . $row['author'];
                 $result = mysql_query($query, $con);
                 while ($row1 = mysql_fetch_array($result)) {
@@ -48,7 +55,7 @@ if ($login_name === "" || $login_name === NULL) {
                 echo "<a href='#' onclick='blogIndex(" . $row['author'] . ")'>" . $author . "</a><br />";
                 echo "----------------" . $row['addtime'] . "<br />";
                 echo $row['article'];
-                if ($login_name === $author) {//if author,can manage blog~
+                if ($login_ID === $row['author']) {//if author,can manage blog~
                     $isAdmin = true;
                     echo "<p><select>"
                     . "<option value='manage'>manage</option>"

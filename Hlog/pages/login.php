@@ -48,13 +48,8 @@ and open the template in the editor.
                             while ($row1 = mysql_fetch_array($result)) {
                                 $userID = $row1['userID'];
                             }
-                            $query = "select name from userInfo where userID = '$userID'";
-                            $result = mysql_query($query, $con);
-                            while ($row1 = mysql_fetch_array($result)) {
-                                $name = $row1['name'];
-                            }
                             mysql_close($con);
-                            $_SESSION["login"] = $name;
+                            $_SESSION["login"] = $userID;
                             echo "<script>"
                             . "location.href='center.php'"
                             . "</script>";

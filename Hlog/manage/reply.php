@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-$login_name = $_SESSION["login"];
+$login_ID = $_SESSION["login"];
 
-if ($login_name === "" || $login_name === NULL) {
+if ($login_ID === "" || $login_ID === NULL) {
     echo "<script>"
-    . "location.href='../login.php';"
+    . "location.href='login.php';"
     . "</script>";
 }
 //init:

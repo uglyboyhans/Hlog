@@ -6,14 +6,26 @@ and open the template in the editor.
 -->
 <?php
 session_start();
-$login_name = $_SESSION["login"];
+$login_ID = $_SESSION["login"];
 
-if ($login_name === "" || $login_name === NULL) {
+if ($login_ID === "" || $login_ID === NULL) {
     echo "<script>"
     . "location.href='login.php';"
     . "</script>";
 } else {
-    echo "Welcome: " . $login_name . " ! <a href='logout.php'>logout</a><br />";
+    $con = mysql_connect("localhost", "loguser", "uglyboy");
+    if (!$con) {
+        die("Could not connect" . mysql_error());
+    } else {
+        mysql_select_db("hlog");
+        $query = "select name from userInfo where userID=".$login_ID;
+        $result = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result)) {
+            $name=$row["name"];
+        }
+        mysql_close($con);
+    }
+    echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
 }
 ?>
 <html>
@@ -36,7 +48,7 @@ if ($login_name === "" || $login_name === NULL) {
             </form>
         </div>
 
-        <a href="../index.php">Index</a>
+        <a href="center.php">Center</a>
 
         <?php
         $title = $article = $genre = ""; //init;
