@@ -45,7 +45,7 @@ if ($login_name === "" || $login_name === NULL) {
                 while ($row1 = mysql_fetch_array($result)) {
                     $author = $row1['name'];
                 }
-                echo "<b>" . $author . "</b><br />";
+                echo "<a href='#' onclick='blogIndex(" . $row['author'] . ")'>" . $author . "</a><br />";
                 echo "----------------" . $row['addtime'] . "<br />";
                 echo $row['article'];
                 if ($login_name === $author) {//if author,can manage blog~
@@ -63,12 +63,12 @@ if ($login_name === "" || $login_name === NULL) {
             $result_comment = mysql_query($query, $con);
             if (!empty($result_comment)) {
                 while ($row_comment = mysql_fetch_array($result_comment)) {
-                    $query = "select name from userInfo where userID =" . $row_comment['visitor'] ;
+                    $query = "select name from userInfo where userID =" . $row_comment['visitor'];
                     $result = mysql_query($query, $con);
                     while ($row1 = mysql_fetch_array($result)) {
                         $visitor = $row1['name'];
                     }
-                    echo $visitor . " says:<br />";
+                    echo "<a href='#' onclick='blogIndex(" . $row_comment['visitor'] . ")'>" .$visitor . "</a> says:<br />";
                     echo $row_comment['content'] . "<br />";
                     echo "at " . $row_comment['addtime'] . "<br />";
                     if (!empty($row_comment['reply'])) {              //in case it's NULL
@@ -99,6 +99,7 @@ if ($login_name === "" || $login_name === NULL) {
         </form>
         <br /><a href="center.php">Center</a>
         <script src="../js/manage.js"></script>
+        <script src="../js/toPages.js"></script>
     </body>
 </html>
 

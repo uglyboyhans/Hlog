@@ -15,7 +15,10 @@ IndividualCenter.php{
 		SelfInformation{//2
 			info{
 				[]={name,icon,visitorNum,followerNum,followingNum};
-				settings;
+				settings{
+					background;
+					userInfo;
+				}
 			}
 			weather{
 				//how to do?
@@ -31,7 +34,7 @@ IndividualCenter.php{
 		Guide{//3
 			bigGuide{
 				//mouseover.show(smallGuide);
-				writings{
+				add{
 					blog;
 					fellings;
 					photos;
@@ -39,20 +42,52 @@ IndividualCenter.php{
 					video;
 				}
 				relation{
-					followers;
-					following;
-					closeFriends;
-					visitor;
+					followers{
+						function[]={
+						show number;
+						show followers;
+						visit them;
+						delete;//remember operating 2 rows
+						}
+					};
+					following{
+						function[]={
+						show number;
+						show followings;
+						visit them;
+						delete;//remember operating 2 rows
+						}
+					};
+					closeFriends{
+						function[]={
+						show number;
+						show followings;
+						visit them;
+						delete;//remember operating 2 rows
+						}
+					};
+					visitor;//function seem to upper element
 					visited;
 				}
 				interaction{
-					comment;
-					retransmission;
-					collect;
-					message;
-					letter;
+					comment;//function[]={show;manage;}
+					retransmission;//function[]={show;manage;}
+					collect;//function[]={show;manage;}
+					message;//use as msg_board
+					letter{
+						send=insert into letter;
+						receive=select where read = no;
+						read = update read = yes;
+						reply=send;
+					}
 				}
-				newInfo;
+				newInfo{
+					if(not NULL) turn red;
+					show newInfo number;
+					show type of info;
+					show info;
+					href=*.php;//to the manage page 
+				}
 				settings;
 			}
 			recommand{
@@ -80,6 +115,10 @@ IndividualCenter.php{
 	}
 }
 
+someone_page.php{
+	
+}
+
 Index.php{
 	bigTitle{
 		register;
@@ -98,7 +137,7 @@ register.php{//done
 	identifyingCode;
 }
 
-readblog{
+readblog.php{
 	show from mysql;
 	show comment(Num),readNum,retransmissionNum;
 	form(comment);
@@ -119,10 +158,10 @@ tables[]={
 		newDynamic,
 		newInfo,
 	};
-	
+
+cols[]={	
 userLogin[]={userID,username,password,signDate}
-userInfo[]={userID,name,gender,birthDate,email,
-	icon,signature}
+userInfo[]={userID,name,gender,birthDate,email,icon,signature}
 userSettings[]={userID,background}
 
 blog[]={id,title,author,article,addTime,genre}
@@ -139,17 +178,34 @@ visitLog[]={userID,visitor,visitTime}
 visitNum[]={userID,num}
 
 readNum[]={ObType,relyID,num}
-comment[]={id,visitor,content,addTime,reply,
-	ObType,relyID,haveRead(default"NO")}
-retransmission[]={id,visitor,content,addTime,
-ObType,relyID}
+comment[]={id,visitor,content,addTime,reply,ObType,relyID,haveRead(default"NO")}
+retransmission[]={id,visitor,content,addTime,ObType,relyID}
 collect[]={id,visitor,addTime,ObType,relyID}
-message[]={id,userID,visitor,content,addTime,
-reply,haveRead}
+message[]={id,userID,visitor,content,addTime,reply,haveRead}
 letter[]={id,userID,visitor,content,addTime,haveRead}
 
 
 newInfo[]={id,userID,infoType,addTime}
+}
+
+function[]={
+search;//bing or baidu;
+register;
+login{
+		center.php{
+			showDynamic;
+		}
+		visit{
+			showDynamic;
+			follow or cancle_follow;
+		}
+	}
+
+logout;
+}
+
+
+
 
 
 

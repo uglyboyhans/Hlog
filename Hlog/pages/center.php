@@ -47,13 +47,14 @@ if ($login_name === "" || $login_name === NULL) {
                         $author = $row1['name'];
                     }
                     echo "<p>-------------------------------------</p>";
-                    echo "<span onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</span>";
-                    echo "--------" . $author . "--------" . $row['addtime'];
+                    echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
+                    echo "--------<a href='#' onclick='blogIndex(" . $row['author'] . ")'>" . $author .
+                         "</a>--------" . $row['addtime'];
                 }
                 mysql_close($con);
             }
             ?>
         </div>
     </body>
-    <script src="../js/toReadBlog.js"></script>
+    <script src="../js/toPages.js"></script>
 </html>

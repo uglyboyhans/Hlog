@@ -20,6 +20,23 @@ function readBlog(read_id) {
     location.href=url;
 }
 
+function blogIndex(author_id) {
+    var xmlHttp;
+    xmlHttp = GetXmlHttpObject();
+    if (xmlHttp === null)
+    {
+        alert("Browser does not support HTTP Request");
+        return;
+    }
+    var url = "../pages/blogIndex.php";
+    url = url + "?q=" + author_id;
+    url = url + "&sid=" + Math.random();
+    xmlHttp.onreadystatechange = stateChanged;
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+    location.href=url;
+}
+
 function stateChanged()
 {
     if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete")
