@@ -13,8 +13,7 @@ $content = "";
 $relyID = $_GET["q"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $content = str_replace(["\r\n", "\r", "\n"], "<br />", $_POST["content"]);
-    $content = str_replace("'", "\'", $content);
+    $content = str_replace("'", "\'", $_POST["content"]);
     $ObType = $_POST["ObType"];
 }
 if ($content != "" && $relyID != "") {

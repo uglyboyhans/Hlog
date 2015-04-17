@@ -15,7 +15,7 @@ if ($login_ID === "" || $login_ID === NULL) {
 } else {
     $con = mysql_connect("localhost", "loguser", "uglyboy");
     if (!$con) {
-        die("Could not connect" . mysql_error());
+        die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog");
         $query = "select name from userInfo where userID=".$login_ID;
