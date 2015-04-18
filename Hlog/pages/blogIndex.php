@@ -43,20 +43,26 @@ while ($row = mysql_fetch_array($result)) {
         <title>Hlog - <?php echo $owner_name; ?>'s blog index</title>
     </head>
     <body>
+        <div><!--userInfo-->
+            <button id="btn_follow" onclick="follow(<?php echo $q; ?>)" >follow</button>
+            <br />
+            
+        </div>
+        <div><!--Main part-->
         <?php
-        
-            mysql_select_db("hlog");
-            $query = "select id,title,addtime from blog where author=" . $q;
-            $result = mysql_query($query, $con);
-            while ($row = mysql_fetch_array($result)) {
-                echo "<p>-------------------------------------</p>";
-                echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
-                echo "--------<a href='#' onclick='blogIndex(" . $q . ")'>" . $owner_name .
-                "</a>--------" . $row['addtime'];
-            }
-            mysql_close($con);
-        
+        $query = "select id,title,addtime from blog where author=" . $q;
+        $result = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result)) {
+            echo "<p>-------------------------------------</p>";
+            echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
+            echo "--------<a href='#' onclick='blogIndex(" . $q . ")'>" . $owner_name .
+            "</a>--------" . $row['addtime'];
+        }
+        mysql_close($con);
         ?>
+        </div>
+        <a href="center.php">Center</a>
     </body>
     <script src="../js/toPages.js"></script>
+    <script src="../js/manage.js"></script>
 </html>

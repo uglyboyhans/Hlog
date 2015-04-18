@@ -32,7 +32,7 @@ if ($login_ID === "" || $login_ID === NULL) {
     <head>
         <meta charset="UTF-8">
         <title>Hlog - create</title>
-        <script src="../ckeditor/ckeditor.js"></script>
+        <script src="../../ckeditor/ckeditor.js"></script>
     </head>
     <body>
         <div>

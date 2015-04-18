@@ -5,6 +5,23 @@
  */
 /* global xmlHttp */
 //edit blog:
+function follow(followingID) {
+    var xmlHttp;
+    xmlHttp = GetXmlHttpObject();
+    if (xmlHttp === null)
+    {
+        alert("Browser does not support HTTP Request");
+        return;
+    }
+    var url = "../manage/follow.php";
+    url = url + "?q=" + followingID;
+    url = url + "&sid=" + Math.random();
+    xmlHttp.onreadystatechange = stateChanged;
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+    location.href = url;
+}
+
 function editBlog(blog_id) {
     var xmlHttp;
     xmlHttp = GetXmlHttpObject();
