@@ -29,13 +29,19 @@ if ($login_ID === "" || $login_ID === NULL) {
 ?>
 <?php
 $q = $_GET["q"]; //owner's userID
-
+$doFollow="<button id='btn_follow' onclick='follow($q)' >follow</button>";
 $query = "select name from userInfo where userID=" . $q;
 $result = mysql_query($query, $con);
 while ($row = mysql_fetch_array($result)) {
     $owner_name = $row['name'];
-    //echo $name;
 }
+$query = "select following from following where userID=" .$login_ID;
+$result = mysql_query($query, $con);
+while ($row = mysql_fetch_array($result)) {
+    $doFollow="<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
+}
+
+
 ?>
 <html>
     <head>
@@ -44,7 +50,8 @@ while ($row = mysql_fetch_array($result)) {
     </head>
     <body>
         <div><!--userInfo-->
-            <button id="btn_follow" onclick="follow(<?php echo $q; ?>)" >follow</button>
+            <?php echo $doFollow ?>
+            <!--button id="btn_follow" onclick="follow(<?php echo $q; ?>)" >follow</button-->
             <br />
             
         </div>

@@ -22,6 +22,23 @@ function follow(followingID) {
     location.href = url;
 }
 
+function unFollow(followingID) {
+    var xmlHttp;
+    xmlHttp = GetXmlHttpObject();
+    if (xmlHttp === null)
+    {
+        alert("Browser does not support HTTP Request");
+        return;
+    }
+    var url = "../manage/unFollow.php";
+    url = url + "?q=" + followingID;
+    url = url + "&sid=" + Math.random();
+    xmlHttp.onreadystatechange = stateChanged;
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+    location.href = url;
+}
+
 function editBlog(blog_id) {
     var xmlHttp;
     xmlHttp = GetXmlHttpObject();
@@ -38,7 +55,7 @@ function editBlog(blog_id) {
     xmlHttp.send(null);
     location.href = url;
 }
-//delete blog:
+
 function deleteBlog(del_id) {
     if (confirm("Sure to delete this article?") === true) {
         var xmlHttp;
