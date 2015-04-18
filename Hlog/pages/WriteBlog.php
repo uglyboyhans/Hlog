@@ -18,10 +18,10 @@ if ($login_ID === "" || $login_ID === NULL) {
         die("Could not connect" . mysql_error());
     } else {
         mysql_select_db("hlog");
-        $query = "select name from userInfo where userID=".$login_ID;
+        $query = "select name from userInfo where userID=" . $login_ID;
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
-            $name=$row["name"];
+            $name = $row["name"];
         }
         mysql_close($con);
     }
@@ -68,23 +68,13 @@ if ($login_ID === "" || $login_ID === NULL) {
                 $time = date("Y-m-d h:i:s");
                 //select db:
                 mysql_select_db("hlog", $con);
-                //get userID:
-                $query = "select userID from userlogin where username = '$login_name'";
-                $result = mysql_query($query, $con);
-                while ($row1 = mysql_fetch_array($result)) {
-                    $userID = $row1['userID'];
-                }
                 //insert blog:
                 $query = "insert into blog (title,author,article,addTime,genre)"
-                        . " values ('$title',$userID,'$article','$time','$genre')";
+                        . " values ('$title',$login_ID,'$article','$time','$genre')";
                 if (mysql_query($query, $con)) {
                     //add to readNum(count the read number):
                     //get blog id:
-                    $query = "select max(id) as id from blog where author =$userID";
-                    $result = mysql_query($query, $con);
-                     while ($row1 = mysql_fetch_array($result)) {
-                      $relyID = $row1['id'];
-                      } 
+                    $relyID = mysql_insert_id($con);
                     //insert into readNum
                     $query = "insert into readNum values ('blog',$relyID,0)";
                     if (mysql_query($query, $con)) {
@@ -92,10 +82,10 @@ if ($login_ID === "" || $login_ID === NULL) {
                         echo "<script>"
                         . "alert('OK!');location.href='center.php';"
                         . "</script>";
-                    } else {
+                    } else {//end if(insert into readNum)
                         die(mysql_error($con));
                     }
-                } else {
+                } else {//end if(insert into blog)
                     die(mysql_error($con));
                 }
             }

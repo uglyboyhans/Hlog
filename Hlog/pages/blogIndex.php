@@ -19,8 +19,8 @@ if ($login_ID === "" || $login_ID === NULL) {
     } else {
         mysql_select_db("hlog");
         $query = "select name from userInfo where userID=" . $login_ID;
-        $result = mysql_query($query, $con);
-        while ($row = mysql_fetch_array($result)) {
+        $result_name = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result_name)) {
             $name = $row["name"];
         }
     }
@@ -29,18 +29,37 @@ if ($login_ID === "" || $login_ID === NULL) {
 ?>
 <?php
 $q = $_GET["q"]; //owner's userID
+if($q===$login_ID){
+    echo "<script>"
+    . "location.href='center.php';"
+    . "</script>";
+}
+$followerNum=$followingNum=0;//numbers about owner's following situation
 $doFollow="<button id='btn_follow' onclick='follow($q)' >follow</button>";
 $query = "select name from userInfo where userID=" . $q;
-$result = mysql_query($query, $con);
-while ($row = mysql_fetch_array($result)) {
+$result_ownername = mysql_query($query, $con);
+while ($row = mysql_fetch_array($result_ownername)) {
     $owner_name = $row['name'];
 }
+//set doFollow:
 $query = "select following from following where userID=" .$login_ID;
-$result = mysql_query($query, $con);
-while ($row = mysql_fetch_array($result)) {
+$result_doFollow = mysql_query($query, $con);
+while ($row = mysql_fetch_array($result_doFollow)) {
     $doFollow="<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
 }
 
+//count following and follower numbers:
+$query = "select COUNT(following) as followingNum from following where userID=".$q;//following number
+$rst_Folingnum=mysql_query($query, $con);
+while($row_folingnum=  mysql_fetch_array($rst_Folingnum)){
+    $followingNum=$row_folingnum["followingNum"];
+}
+
+$query = "select COUNT(userID) as followerNum from following where following=".$q;//follower number
+$rst_Folernum=mysql_query($query, $con);
+while($row_folernum=  mysql_fetch_array($rst_Folernum)){
+    $followerNum=$row_folernum["followerNum"];
+}
 
 ?>
 <html>
@@ -50,8 +69,9 @@ while ($row = mysql_fetch_array($result)) {
     </head>
     <body>
         <div><!--userInfo-->
-            <?php echo $doFollow ?>
-            <!--button id="btn_follow" onclick="follow(<?php echo $q; ?>)" >follow</button-->
+            <?php echo $doFollow ?><!--<button >follow</button>-->
+            <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
+            <span id="follower">follower:<?php echo $followerNum; ?></span>
             <br />
             
         </div>

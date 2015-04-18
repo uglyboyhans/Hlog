@@ -48,7 +48,7 @@ if (!$con) {
     <head>
         <meta charset="UTF-8">
         <title>Hlog - edit</title>
-        <script src="../ckeditor/ckeditor.js"></script>
+        <script src="../../ckeditor/ckeditor.js"></script>
     </head>
     <body>
         <div style="margin-left:auto;
