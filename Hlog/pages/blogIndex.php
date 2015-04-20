@@ -26,41 +26,59 @@ if ($login_ID === "" || $login_ID === NULL) {
     }
     echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
 }
-?>
-<?php
+
+/*
+ * get owner's ID;
+ * get following information;
+ * get visitor information;
+ */
 $q = $_GET["q"]; //owner's userID
-if($q===$login_ID){
-    echo "<script>"
-    . "location.href='center.php';"
-    . "</script>";
-}
-$followerNum=$followingNum=0;//numbers about owner's following situation
-$doFollow="<button id='btn_follow' onclick='follow($q)' >follow</button>";
+
+$followerNum = $followingNum = 0; //numbers about owner's following situation
+$doFollow = "<button id='btn_follow' onclick='follow($q)' >follow</button>";
 $query = "select name from userInfo where userID=" . $q;
 $result_ownername = mysql_query($query, $con);
 while ($row = mysql_fetch_array($result_ownername)) {
     $owner_name = $row['name'];
 }
 //set doFollow:
-$query = "select following from following where userID=" .$login_ID;
-$result_doFollow = mysql_query($query, $con);
-while ($row = mysql_fetch_array($result_doFollow)) {
-    $doFollow="<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
+if ($q !== $login_ID) {
+    $query = "select following from following where userID=" . $login_ID;
+    $result_doFollow = mysql_query($query, $con);
+    while ($row = mysql_fetch_array($result_doFollow)) {
+        $doFollow = "<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
+    }
+} else {
+    $doFollow = "";
 }
 
 //count following and follower numbers:
-$query = "select COUNT(following) as followingNum from following where userID=".$q;//following number
-$rst_Folingnum=mysql_query($query, $con);
-while($row_folingnum=  mysql_fetch_array($rst_Folingnum)){
-    $followingNum=$row_folingnum["followingNum"];
+$query = "select COUNT(following) as followingNum from following where userID=" . $q; //following number
+$rst_Folingnum = mysql_query($query, $con);
+while ($row_folingnum = mysql_fetch_array($rst_Folingnum)) {
+    $followingNum = $row_folingnum["followingNum"];
 }
-
-$query = "select COUNT(userID) as followerNum from following where following=".$q;//follower number
-$rst_Folernum=mysql_query($query, $con);
-while($row_folernum=  mysql_fetch_array($rst_Folernum)){
-    $followerNum=$row_folernum["followerNum"];
+$query = "select COUNT(userID) as followerNum from following where following=" . $q; //follower number
+$rst_Folernum = mysql_query($query, $con);
+while ($row_folernum = mysql_fetch_array($rst_Folernum)) {
+    $followerNum = $row_folernum["followerNum"];
 }
-
+//get visitor number:
+$query = "select num from visitNum where userID=" . $q;
+$result_vstNum = mysql_query($query, $con);
+while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
+    $visitNum = $row_vstNum['num']; //add visitNum from this time
+    //if not myself: (visitor number )+1 and to mysql:
+    if ($q !== $login_ID) {
+        $newVstNum = $visitNum + 1;
+        $query1 = "update visitNum set num=$newVstNum where userID=" . $q;
+        if (mysql_query($query1, $con)) {
+            
+        } else {
+            die(mysql_error());
+        }
+    }
+}
 ?>
 <html>
     <head>
@@ -71,22 +89,24 @@ while($row_folernum=  mysql_fetch_array($rst_Folernum)){
         <div><!--userInfo-->
             <?php echo $doFollow ?><!--<button >follow</button>-->
             <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
-            <span id="follower">follower:<?php echo $followerNum; ?></span>
+            <span id="follower">follower:<?php echo $followerNum; ?></span>&nbsp;&nbsp;
+            <span id="visitNum">visitor number:<?php echo $visitNum; ?></span>
             <br />
-            
+            <p id="txtHint"></p>
+
         </div>
         <div><!--Main part-->
-        <?php
-        $query = "select id,title,addtime from blog where author=" . $q;
-        $result = mysql_query($query, $con);
-        while ($row = mysql_fetch_array($result)) {
-            echo "<p>-------------------------------------</p>";
-            echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
-            echo "--------<a href='#' onclick='blogIndex(" . $q . ")'>" . $owner_name .
-            "</a>--------" . $row['addtime'];
-        }
-        mysql_close($con);
-        ?>
+            <?php
+            $query = "select id,title,addtime from blog where author=" . $q;
+            $result = mysql_query($query, $con);
+            while ($row = mysql_fetch_array($result)) {
+                echo "<p>-------------------------------------</p>";
+                echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
+                echo "--------<a href='#' onclick='blogIndex(" . $q . ")'>" . $owner_name .
+                "</a>--------" . $row['addtime'];
+            }
+            mysql_close($con);
+            ?>
         </div>
         <a href="center.php">Center</a>
     </body>

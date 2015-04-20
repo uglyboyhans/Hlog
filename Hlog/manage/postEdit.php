@@ -7,10 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if ($new_title != "") {
     $blog_id=$_POST["blog_id"];
     $new_article = $_POST["article"];
-    
-    $time = date("Y-m-d h:i:s"); //recent update time
-    $new_article = "(Recent update time:$time)<br />" . $new_article;
-
     //update the blog to mysql:
     $con = mysql_connect("localhost", "loguser", "uglyboy");
     if (!$con) {

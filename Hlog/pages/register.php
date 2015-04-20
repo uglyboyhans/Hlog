@@ -62,14 +62,14 @@ and open the template in the editor.
                         $flag = false; //can't regiest
                     }
                     if ($flag) {
+                        //insert into table "userlogin,userInfo,usersetting,visitNum:
                         $signDate = date("y-m-d");
                         $query = "insert into userLogin (username,password,signDate)"
                                 . " values ('$username','$password','$signDate')";
-                        mysql_query($query, $con);
-                        $query = "select userID from userLogin where username = '$username'";
-                        $result = mysql_query($query, $con);
-                        while ($row1 = mysql_fetch_array($result)) {
-                            $userID = $row1['userID'];
+                        if (mysql_query($query, $con)) {
+                            $userID = mysql_insert_id($con); //get userID that registering now
+                        } else {
+                            echo mysql_error(); //insert userlogin
                         }
                         $query = "insert into userInfo (userID,name,gender)"
                                 . " values ($userID,'$username','$gender')";
@@ -77,15 +77,23 @@ and open the template in the editor.
                             $query = "insert into userSettings (userID)"
                                     . " values ($userID)";
                             if (mysql_query($query, $con)) {
-                                mysql_close($con);
-                                session_start();
-                                $_SESSION["login"] = $username;
-                                echo "<script>"
-                                . "alert('OK!');location.href='center.php';"
-                                . "</script>";
+                                $query = "insert into visitNum (userID,num)"
+                                        . " values ($userID,0)";
+                                if (mysql_query($query, $con)) {
+                                    mysql_close($con);
+                                    session_start();
+                                    $_SESSION["login"] = $userID;
+                                    echo "<script>"
+                                    . "alert('OK!');location.href='center.php';"
+                                    . "</script>";
+                                } else {
+                                    echo mysql_error(); //insert visitNum
+                                }
+                            } else {
+                                echo mysql_error(); //insert userSettings
                             }
                         } else {
-                            echo mysql_error();
+                            echo mysql_error(); //insert userInfo
                         }
                     }
                 }

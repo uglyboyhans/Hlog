@@ -19,7 +19,6 @@ function follow(followingID) {
     xmlHttp.onreadystatechange = stateChanged;
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
-    location.href = url;
 }
 
 function unFollow(followingID) {
@@ -36,7 +35,6 @@ function unFollow(followingID) {
     xmlHttp.onreadystatechange = stateChanged;
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
-    location.href = url;
 }
 
 function editBlog(blog_id) {
@@ -71,7 +69,7 @@ function deleteBlog(del_id) {
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
-        location.href = url;
+        
     }
 }
 
@@ -91,7 +89,7 @@ function deleteComment(del_id) {
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
-        location.href = url;
+        
     }
 }
 
@@ -104,7 +102,8 @@ function stateChanged()
 {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete")
     {
-        document.getElementById("txtHint").innerHTML = xmlHttp.responseText;
+        alert("OK!");
+        history.go(0);
     }
 }
 
