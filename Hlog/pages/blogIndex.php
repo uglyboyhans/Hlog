@@ -77,6 +77,8 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         } else {
             die(mysql_error());
         }
+    }else{
+        $newVstNum = $visitNum;
     }
 }
 ?>
@@ -90,9 +92,8 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             <?php echo $doFollow ?><!--<button >follow</button>-->
             <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
             <span id="follower">follower:<?php echo $followerNum; ?></span>&nbsp;&nbsp;
-            <span id="visitNum">visitor number:<?php echo $visitNum; ?></span>
+            <span id="visitNum">visitor number:<?php echo $newVstNum; ?></span>
             <br />
-            <p id="txtHint"></p>
 
         </div>
         <div><!--Main part-->
@@ -104,6 +105,29 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
                 echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
                 echo "--------<a href='#' onclick='blogIndex(" . $q . ")'>" . $owner_name .
                 "</a>--------" . $row['addtime'];
+            }
+            ?>
+        </div>
+        <div id="div_msgBoard">
+            <a href="#" onclick="sendMsg(<?php echo $q; ?>)">Write Message</a><br />
+            <?php
+            $query = "select id,visitor,content,addtime,reply from message where userID=" . $q;
+            $result_message = mysql_query($query, $con);
+            echo "<p>------------------------------</p>";
+            if (!empty($result_message)) {
+                while ($row_message = mysql_fetch_array($result_message)) {
+                    $query = "select name from userInfo where userID =" . $row_message['visitor'];
+                    $result_userID = mysql_query($query, $con);
+                    while ($row1 = mysql_fetch_array($result_userID)) {
+                        $visitor = $row1['name'];
+                    }
+                    echo "<a href='#' onclick='blogIndex(" . $row_message['visitor'] . ")'>" . $visitor . "</a> :<br />";
+                    echo $row_message['content'] . "<br />";
+                    echo "------------------" . $row_message['addtime'] . "<br />";
+                    if (!empty($row_message['reply'])) {              //in case it's NULL
+                        echo "admin reply:" . $row_message['reply'] . "<br />";
+                    }
+                }
             }
             mysql_close($con);
             ?>

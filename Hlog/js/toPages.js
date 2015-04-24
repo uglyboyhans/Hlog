@@ -14,9 +14,13 @@ function blogIndex(author_id) {
     var url = "../pages/blogIndex.php";
     url = url + "?q=" + author_id;
     url = url + "&sid=" + Math.random();
-    /*xmlHttp.onreadystatechange = stateChanged;
-    xmlHttp.open("GET", url, true);
-    xmlHttp.send(null);*/
+    location.href=url;
+}
+
+function sendMsg(owner_id) {
+    var url = "../pages/sendMsg.php";
+    url = url + "?q=" + owner_id;
+    url = url + "&sid=" + Math.random();
     location.href=url;
 }
 

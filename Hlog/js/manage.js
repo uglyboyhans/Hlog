@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global xmlHttp */
-//edit blog:
+
 function follow(followingID) {
     var xmlHttp;
     xmlHttp = GetXmlHttpObject();

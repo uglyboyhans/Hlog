@@ -18,10 +18,10 @@ if ($login_ID === "" || $login_ID === NULL) {
         die("Could not connect" . mysql_error());
     } else {
         mysql_select_db("hlog");
-        $query = "select name from userInfo where userID=".$login_ID;
+        $query = "select name from userInfo where userID=" . $login_ID;
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
-            $name=$row["name"];
+            $name = $row["name"];
         }
     }
     echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
@@ -44,6 +44,7 @@ if ($login_ID === "" || $login_ID === NULL) {
             ?>
         </div>
         <div id="div_mainPart">
+            <h2>Blogs:</h2>
             <?php
             //mysql has been open at the top;
             $query = "select id,title,addtime,author from blog";
@@ -58,6 +59,29 @@ if ($login_ID === "" || $login_ID === NULL) {
                 echo "<a href='#' onclick='readBlog(" . $row['id'] . ")'>" . $row['title'] . "</a>";
                 echo "--------<a href='#' onclick='blogIndex(" . $row['author'] . ")'>" . $author .
                 "</a>--------" . $row['addtime'];
+            }
+            ?>
+        </div>
+        <div id="div_msgBoard">
+            <h2>Message Board</h2>
+            <?php
+            $query = "select id,visitor,content,addtime,reply from message where userID=" . $login_ID;
+            $result_message = mysql_query($query, $con);
+            echo "<p>------------------------------</p>";
+            if (!empty($result_message)) {
+                while ($row_message = mysql_fetch_array($result_message)) {
+                    $query = "select name from userInfo where userID =" . $row_message['visitor'];
+                    $result_userID = mysql_query($query, $con);
+                    while ($row1 = mysql_fetch_array($result_userID)) {
+                        $visitor = $row1['name'];
+                    }
+                    echo "<a href='#' onclick='blogIndex(" . $row_message['visitor'] . ")'>" . $visitor . "</a> :<br />";
+                    echo $row_message['content'] . "<br />";
+                    echo "------------------" . $row_message['addtime'] . "<br />";
+                    if (!empty($row_message['reply'])) {              //in case it's NULL
+                        echo "admin reply:" . $row_message['reply'] . "<br />";
+                    }
+                }
             }
             mysql_close($con);
             ?>
