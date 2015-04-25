@@ -23,9 +23,6 @@ if (!$con) {
     $query = "delete from following where userID=$login_ID and following=$q";
     if (mysql_query($query, $con)) {
         mysql_close($con);
-        echo "<script>"
-        . "history.back();"
-        . "</script>";
         exit;
     } else {
         mysql_close($con);

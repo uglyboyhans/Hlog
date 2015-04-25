@@ -46,7 +46,7 @@ if ($login_ID === "" || $login_ID === NULL) {
                 if (mysql_query($query, $con)) {
                     mysql_close($con);
                     echo "<script>"
-                    . "blogIndex($userID);"
+                    . "alert('OK!~');history.go(-2);"
                     . "</script>";
                 } else {
                     die(mysql_error());

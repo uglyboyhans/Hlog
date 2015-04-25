@@ -30,9 +30,6 @@ if (!$con) {
         $query = "insert into following (userID,following) values ($login_ID,$q)";
         if (mysql_query($query, $con)) {
             mysql_close($con);
-            echo "<script>"
-            . "history.back();"
-            . "</script>";
             exit;
         } else {
             die(mysql_error());

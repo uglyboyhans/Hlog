@@ -6,7 +6,7 @@ if (!$con) {
     die('Could not connect: ' . mysql_error());
 } else {
     mysql_select_db("hlog", $con); //use database
-    $query = "delete from comment where id=" . $q;
+    $query = "delete from message where id=" . $q;
     if (mysql_query($query, $con)) {
         mysql_close($con);
     }else{

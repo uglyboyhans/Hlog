@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var xmlHttp;
+xmlHttp = GetXmlHttpObject();
 function follow(followingID) {
-    var xmlHttp;
-    xmlHttp = GetXmlHttpObject();
     if (xmlHttp === null)
     {
         alert("Browser does not support HTTP Request");
@@ -21,8 +20,6 @@ function follow(followingID) {
 }
 
 function unFollow(followingID) {
-    var xmlHttp;
-    xmlHttp = GetXmlHttpObject();
     if (xmlHttp === null)
     {
         alert("Browser does not support HTTP Request");
@@ -37,8 +34,6 @@ function unFollow(followingID) {
 }
 
 function editBlog(blog_id) {
-    var xmlHttp;
-    xmlHttp = GetXmlHttpObject();
     if (xmlHttp === null)
     {
         alert("Browser does not support HTTP Request");
@@ -55,8 +50,6 @@ function editBlog(blog_id) {
 
 function deleteBlog(del_id) {
     if (confirm("Sure to delete this article?") === true) {
-        var xmlHttp;
-        xmlHttp = GetXmlHttpObject();
         if (xmlHttp === null)
         {
             alert("Browser does not support HTTP Request");
@@ -68,15 +61,12 @@ function deleteBlog(del_id) {
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
-        
     }
 }
 
 //delete comment:
 function deleteComment(del_id) {
     if (confirm("delete?") === true) {
-        var xmlHttp;
-        xmlHttp = GetXmlHttpObject();
         if (xmlHttp === null)
         {
             alert("Browser does not support HTTP Request");
@@ -88,7 +78,22 @@ function deleteComment(del_id) {
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
-        
+    }
+}
+
+function deleteMsg(del_id) {
+    if (confirm("delete?") === true) {
+        if (xmlHttp === null)
+        {
+            alert("Browser does not support HTTP Request");
+            return;
+        }
+        var url = "../manage/deleteMsg.php";
+        url = url + "?q=" + del_id;
+        url = url + "&sid=" + Math.random();
+        xmlHttp.onreadystatechange = stateChanged;
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send(null);
     }
 }
 
@@ -99,9 +104,7 @@ function reply(reply_id) {// show the form to reply a comment;
 
 function stateChanged()
 {
-    if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete")
-    {
-        alert("OK!");
+    if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
         history.go(0);
     }
 }

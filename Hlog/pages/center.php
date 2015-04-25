@@ -81,6 +81,11 @@ if ($login_ID === "" || $login_ID === NULL) {
                     if (!empty($row_message['reply'])) {              //in case it's NULL
                         echo "admin reply:" . $row_message['reply'] . "<br />";
                     }
+                    echo "<p><select>"
+                    . "<option value='manage'>manage</option>"
+                    . "<option value='reply' onclick='replyMsg(" . $row_message['id'] . ")'>reply</option>"
+                    . "<option value='delete' onclick='deleteMsg(" . $row_message['id'] . ")'>delete</option>"
+                    . "</select></p>";
                 }
             }
             mysql_close($con);
@@ -88,4 +93,5 @@ if ($login_ID === "" || $login_ID === NULL) {
         </div>
     </body>
     <script src="../js/toPages.js"></script>
+    <script src="../js/manage.js"></script>
 </html>
