@@ -111,9 +111,10 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             ?>
         </div>
         <div id="div_msgBoard">
+            <h2>Message Board</h2>
             <a href="#" onclick="sendMsg(<?php echo $q; ?>)">Write Message</a><br />
             <?php
-            $query = "select id,visitor,content,addtime,reply from message where userID=" . $q;
+            $query = "select id,visitor,content,addtime,reply from message where userID=" . $q." order by id desc limit 3";
             $result_message = mysql_query($query, $con);
             echo "<p>------------------------------</p>";
             if (!empty($result_message)) {
@@ -133,6 +134,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             }
             mysql_close($con);
             ?>
+            <a href="#" onclick="MsgBoard(<?php echo $q; ?>)">more>></a>
         </div>
         <a href="center.php">Center</a>
     </body>

@@ -30,3 +30,10 @@ function replyMsg(msgID){
     url = url + "&sid=" + Math.random();
     location.href=url;
 }
+
+function MsgBoard(userID){
+    var url = "../pages/MsgBoard.php";
+    url = url + "?q=" + userID;
+    url = url + "&sid=" + Math.random();
+    location.href=url;
+}

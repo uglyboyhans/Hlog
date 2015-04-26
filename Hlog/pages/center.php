@@ -65,7 +65,7 @@ if ($login_ID === "" || $login_ID === NULL) {
         <div id="div_msgBoard">
             <h2>Message Board</h2>
             <?php
-            $query = "select id,visitor,content,addtime,reply from message where userID=" . $login_ID;
+            $query = "select id,visitor,content,addtime,reply from message where userID=" . $login_ID." order by id desc limit 3";
             $result_message = mysql_query($query, $con);
             echo "<p>------------------------------</p>";
             if (!empty($result_message)) {
@@ -90,6 +90,7 @@ if ($login_ID === "" || $login_ID === NULL) {
             }
             mysql_close($con);
             ?>
+            <a href="#" onclick="MsgBoard(<?php echo $login_ID; ?>)">more>></a>
         </div>
     </body>
     <script src="../js/toPages.js"></script>
