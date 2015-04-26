@@ -35,7 +35,7 @@ if ($login_ID === "" || $login_ID === NULL) {
 $q = $_GET["q"]; //owner's userID
 
 $followerNum = $followingNum = 0; //numbers about owner's following situation
-$doFollow = "<button id='btn_follow' onclick='follow($q)' >follow</button>";
+$doFollow = "<button id='btn_follow' onclick='follow($q)' >Follow</button>";
 $query = "select name from userInfo where userID=" . $q;
 $result_ownername = mysql_query($query, $con);
 while ($row = mysql_fetch_array($result_ownername)) {
@@ -43,10 +43,12 @@ while ($row = mysql_fetch_array($result_ownername)) {
 }
 //set doFollow:
 if ($q !== $login_ID) {
-    $query = "select following from following where userID=" . $login_ID;
+    $query = "select following from following where userID=" . $login_ID . " and following=" . $q;
     $result_doFollow = mysql_query($query, $con);
-    while ($row = mysql_fetch_array($result_doFollow)) {
-        $doFollow = "<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
+    if (!empty($result_doFollow)) {
+        while ($row_doFollow = mysql_fetch_array($result_doFollow)) {
+            $doFollow = "<button id='btn_unFollow' onclick='unFollow($q)' >Unfollow</button>";
+        }
     }
 } else {
     $doFollow = "";
@@ -77,7 +79,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         } else {
             die(mysql_error());
         }
-    }else{
+    } else {
         $newVstNum = $visitNum;
     }
 }
