@@ -90,15 +90,19 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         <title>Hlog - <?php echo $owner_name; ?>'s blog index</title>
     </head>
     <body>
-        <div><!--userInfo-->
+        <a href="center.php">Center</a>
+        <!--userInfo-->
+        <div id="div_userInfo">
             <?php echo $doFollow ?><!--<button >follow</button>-->
             <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
             <span id="follower">follower:<?php echo $followerNum; ?></span>&nbsp;&nbsp;
             <span id="visitNum">visitor number:<?php echo $newVstNum; ?></span>
             <br />
-
-        </div>
-        <div><!--Main part-->
+        </div><!--end userinfo-->
+        
+        <!--Main part-->
+        <div id="div_mainPart">
+            <audio src="../music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
             <?php
             $query = "select id,title,addtime from blog where author=" . $q;
             $result = mysql_query($query, $con);
@@ -109,7 +113,9 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
                 "</a>--------" . $row['addtime'];
             }
             ?>
-        </div>
+        </div><!--End Main part-->
+        
+        <!--msgBoard-->
         <div id="div_msgBoard">
             <h2>Message Board</h2>
             <a href="#" onclick="sendMsg(<?php echo $q; ?>)">Write Message</a><br />
@@ -135,8 +141,8 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             mysql_close($con);
             ?>
             <a href="#" onclick="MsgBoard(<?php echo $q; ?>)">more>></a>
-        </div>
-        <a href="center.php">Center</a>
+        </div><!--End msgBoard-->
+        
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>

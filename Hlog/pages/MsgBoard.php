@@ -33,6 +33,7 @@ if ($login_ID === "" || $login_ID === NULL) {
         <title>Hlog - Message Board</title>
     </head>
     <body>
+        <a href="center.php">Center</a>
         <?php
         $q = $_GET["q"]; //onwerID
         $query = "select id,visitor,content,addtime,reply from message where userID=" . $q;
@@ -64,6 +65,7 @@ if ($login_ID === "" || $login_ID === NULL) {
         }
         mysql_close($con);
         ?>
+        <a href="#" onclick="blogIndex(<?php echo $q; ?>)">Back to Blog Index</a>
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>

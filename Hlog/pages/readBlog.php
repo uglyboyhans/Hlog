@@ -85,7 +85,7 @@ if ($login_ID === "" || $login_ID === NULL) {
                         echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
                         echo "<button onclick='deleteComment(" . $row_comment['id'] . ")'>delete</button>";
                         echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
-                        . "<form action='../manage/reply.php' method='post'>"
+                        . "<form action='../manage/replyComment.php' method='post'>"
                         . "<input type='hidden' name='id' value=" . $row_comment['id'] . " />"
                         . "<textarea cols='22' rows='3' name='reply'></textarea>"
                         . "<input type='submit' value='reply' />"

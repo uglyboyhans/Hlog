@@ -10,7 +10,7 @@ $login_ID = $_SESSION["login"];
 
 if ($login_ID === "" || $login_ID === NULL) {
     echo "<script>"
-    . "location.href='login.php';"
+    . "location.href='../pages/login.php';"
     . "</script>";
 } else {
     $con = mysql_connect("localhost", "loguser", "uglyboy");
