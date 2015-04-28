@@ -99,7 +99,7 @@ if ($login_ID === "" || $login_ID === NULL) {
                         $nameReverse = strrev($icon["name"]); //reverse the file name
                         $cutString = explode(".", $nameReverse);
                         $extension = "." . strrev($cutString[0]);
-                        $iconPath = "../mediaFiles/icon/" . $login_ID . $extension;
+                        $iconPath = "../../userData/mediaFiles/icon/" . $login_ID . $extension;
                         if (!file_exists($iconPath)) {//if the file not exist,save to folder
                             move_uploaded_file($icon["tmp_name"], $iconPath);
                             //save to mysql:
