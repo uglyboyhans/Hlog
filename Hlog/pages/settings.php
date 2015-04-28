@@ -33,10 +33,16 @@ if ($login_ID === "" || $login_ID === NULL) {
             } else {
                 $signature = $row["signature"];
             }
+            if ($row["icon"] !== NULL && $row["icon"] !== "") {
+                $icon = $row["icon"];
+            } else {
+                $icon = "../mediaFiles/icon/default.jpg";
+            }
         }
         mysql_close($con);
     }
-    echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
+    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !"
+    . " <a href='logout.php'>logout</a><br />";
 }
 ?>
 <html>
@@ -50,8 +56,8 @@ if ($login_ID === "" || $login_ID === NULL) {
             <form id="form_setting" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                 <label>Name:<input type="text" placeholder="The name we see.." name="name" size="20" value="<?php echo $name; ?>" /></label>
                 <br />
-                <!--icon
-                <label>Icon:<input type="file" name="icon" /></label>-->
+                <!--icon-->
+                <label>Icon:<input type="file" name="icon" /></label>
                 <br />
                 <label>Gender:<input type="radio" name="gender" value="female" checked="checked" />Female</label>
                 <label><input type="radio" name="gender" value="male" />Male</label>
@@ -67,15 +73,16 @@ if ($login_ID === "" || $login_ID === NULL) {
         </div>
         <?php
         //userInfo[]={userID,name,gender,birthDate,email,icon,signature}
-        $flag=false;
-        $name = $gender = $birthDate = $email = $signature = "";
+        $flag = false;
+        $icon = $name = $gender = $birthDate = $email = $signature = "";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $name = $_POST["name"];
             $gender = $_POST["gender"];
             $birthDate = $_POST["birthdate"];
             $email = $_POST["email"];
             $signature = $_POST["signature"];
-            $flag=true;
+            $icon = $_FILES["icon"];
+            $flag = true; //can return after save changes to mysql;
         }
 
         $con = mysql_connect("localhost", "loguser", "uglyboy");
@@ -83,48 +90,83 @@ if ($login_ID === "" || $login_ID === NULL) {
             die("Failed to connect:" . mysql_error());
         } else {
             mysql_select_db("hlog", $con);
+            if ($icon !== "") {
+                if ($icon["type"] == "image/gif" || $icon["type"] == "image/jpeg" || $icon["type"] == "image/pjpeg") {//file type is correct
+                    if ($icon["error"] > 0) {
+                        echo "File error:" . $icon["error"] . "<br />";
+                    } else {
+                        //get extention of the file:
+                        $nameReverse = strrev($icon["name"]); //reverse the file name
+                        $cutString = explode(".", $nameReverse);
+                        $extension = "." . strrev($cutString[0]);
+                        $iconPath = "../mediaFiles/icon/" . $login_ID . $extension;
+                        if (!file_exists($iconPath)) {//if the file not exist,save to folder
+                            move_uploaded_file($icon["tmp_name"], $iconPath);
+                            //save to mysql:
+                            $query = "update userInfo set icon='$iconPath' where userID=$login_ID"; //set icon (path)
+                            if (!mysql_query($query, $con)) {
+                                die(mysql_error());
+                                mysql_close($con);
+                            }
+                        } else {//exist already:delete and save new icon to folder
+                            unlink($iconPath);
+                            move_uploaded_file($icon["tmp_name"], $iconPath);
+                            //no use to update mysql
+                        }
+                    }
+                } else {
+                    echo "Type error";
+                    $flag = false;
+                }
+            }//end icon
+
             if ($name !== "") {
                 $query = "update userInfo set name='$name' where userID=$login_ID"; //set name
                 if (!mysql_query($query, $con)) {
                     die(mysql_error());
                     mysql_close($con);
                 }
-            }
+            }//end name
+
             if ($gender !== "") {
                 $query = "update userInfo set gender='$gender' where userID=$login_ID"; //set gender
                 if (!mysql_query($query, $con)) {
                     die(mysql_error());
                     mysql_close($con);
                 }
-            }
+            }//end gender
+
             if ($birthDate !== "") {
                 $query = "update userInfo set birthDate='$birthDate' where userID=$login_ID"; //set gender
                 if (!mysql_query($query, $con)) {
                     die(mysql_error());
                     mysql_close($con);
                 }
-            }
+            }//end birthdate
+
             if ($email !== "") {
                 $query = "update userInfo set email='$email' where userID=$login_ID"; //set gender
                 if (!mysql_query($query, $con)) {
                     die(mysql_error());
                     mysql_close($con);
                 }
-            }
+            }//end email
+
             if ($signature !== "") {
                 $query = "update userInfo set signature='$signature' where userID=$login_ID"; //set gender
                 if (!mysql_query($query, $con)) {
                     die(mysql_error());
                     mysql_close($con);
                 }
-            }
+            }//end signature
+
             mysql_close($con);
             if ($flag) {
                 echo "<script>"
                 . "alert('OK!');location.href='center.php';"
                 . "</script>";
             }
-        }
+        }//end connect success;
         ?>
         <br /><a href="center.php">Center</a>
     </body>

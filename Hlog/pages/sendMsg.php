@@ -12,6 +12,24 @@ if ($login_ID === "" || $login_ID === NULL) {
     echo "<script>"
     . "location.href='login.php';"
     . "</script>";
+} else {
+    $con = mysql_connect("localhost", "loguser", "uglyboy");
+    if (!$con) {
+        die("Could not connect:" . mysql_error());
+    } else {
+        $query = "select name,icon from userInfo where userID=" . $login_ID;
+        $result_name = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result_name)) {
+            $name = $row["name"];
+            if ($row["icon"] !== NULL && $row["icon"] !== "") {
+                $icon = $row["icon"];
+            } else {
+                $icon = "../mediaFiles/icon/default.jpg";
+            }
+        }
+    }
+    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !"
+    . " <a href='logout.php'>logout</a><br />";
 }
 ?>
 
@@ -35,25 +53,20 @@ if ($login_ID === "" || $login_ID === NULL) {
             $userID = $_POST["userID"];
         }
         if ($content !== "") {
-            $con = mysql_connect("localhost", "loguser", "uglyboy");
-            if (!$con) {
-                die("Could not connect:" . mysql_error());
+            $addtime = date("Y-m-d h:i:s");
+            $query = "insert into message (userID,visitor,content,addtime)"
+                    . "values($userID,$login_ID,'$content','$addtime')";
+            if (mysql_query($query, $con)) {
+                mysql_close($con);
+                echo "<script>"
+                . "alert('OK!~');history.go(-2);"
+                . "</script>";
             } else {
-                mysql_select_db("hlog", $con);
-                $addtime = date("Y-m-d h:i:s");
-                $query = "insert into message (userID,visitor,content,addtime)"
-                        . "values($userID,$login_ID,'$content','$addtime')";
-                if (mysql_query($query, $con)) {
-                    mysql_close($con);
-                    echo "<script>"
-                    . "alert('OK!~');history.go(-2);"
-                    . "</script>";
-                } else {
-                    die(mysql_error());
-                }
+                die(mysql_error());
             }
         }
         ?>
+        <a href="center.php">Center</a>
     </body>
     <script src="../js/toPages.js"></script>
 </html>

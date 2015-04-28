@@ -18,13 +18,19 @@ if ($login_ID === "" || $login_ID === NULL) {
         die("Could not connect" . mysql_error());
     } else {
         mysql_select_db("hlog");
-        $query = "select name from userInfo where userID=" . $login_ID;
+        $query = "select name,icon from userInfo where userID=" . $login_ID;
         $result_name = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result_name)) {
             $name = $row["name"];
+            if ($row["icon"] !== NULL && $row["icon"] !== "") {
+                $icon = $row["icon"];
+            }else{
+                $icon="../mediaFiles/icon/default.jpg";
+            }
         }
     }
-    echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
+    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !"
+            . " <a href='logout.php'>logout</a><br />";
 }
 
 /*
@@ -93,16 +99,16 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         <a href="center.php">Center</a>
         <!--userInfo-->
         <div id="div_userInfo">
-            <?php echo $doFollow ?><!--<button >follow</button>-->
+<?php echo $doFollow ?><!--<button >follow</button>-->
             <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
             <span id="follower">follower:<?php echo $followerNum; ?></span>&nbsp;&nbsp;
             <span id="visitNum">visitor number:<?php echo $newVstNum; ?></span>
             <br />
         </div><!--end userinfo-->
-        
+
         <!--Main part-->
         <div id="div_mainPart">
-            <audio src="../music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
+            <audio src="../mediaFiles/music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
             <?php
             $query = "select id,title,addtime from blog where author=" . $q;
             $result = mysql_query($query, $con);
@@ -114,13 +120,13 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             }
             ?>
         </div><!--End Main part-->
-        
+
         <!--msgBoard-->
         <div id="div_msgBoard">
             <h2>Message Board</h2>
             <a href="#" onclick="sendMsg(<?php echo $q; ?>)">Write Message</a><br />
             <?php
-            $query = "select id,visitor,content,addtime,reply from message where userID=" . $q." order by id desc limit 3";
+            $query = "select id,visitor,content,addtime,reply from message where userID=" . $q . " order by id desc limit 3";
             $result_message = mysql_query($query, $con);
             echo "<p>------------------------------</p>";
             if (!empty($result_message)) {
@@ -142,7 +148,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             ?>
             <a href="#" onclick="MsgBoard(<?php echo $q; ?>)">more>></a>
         </div><!--End msgBoard-->
-        
+
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>

@@ -10,7 +10,7 @@ name varchar(20) not NULL,
 gender varchar(6) not NULL default "male",
 birthDate date default "1993-12-18",
 email varchar(100),
-icon blob,
+icon varchar(100),
 signature varchar(147)
 )
 
