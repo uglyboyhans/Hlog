@@ -5,33 +5,8 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-session_start();
-$login_ID = $_SESSION["login"];
-
-if ($login_ID === "" || $login_ID === NULL) {
-    echo "<script>"
-    . "location.href='login.php';"
-    . "</script>";
-} else {
-    $con = mysql_connect("localhost", "loguser", "uglyboy");
-    if (!$con) {
-        die("Could not connect" . mysql_error());
-    } else {
-        mysql_select_db("hlog");
-        $query = "select name,icon from userInfo where userID=" . $login_ID;
-        $result_name = mysql_query($query, $con);
-        while ($row = mysql_fetch_array($result_name)) {
-            $name = $row["name"];
-            if ($row["icon"] !== NULL && $row["icon"] !== "") {
-                $icon = $row["icon"];
-            }else{
-                $icon="../mediaFiles/icon/default.jpg";
-            }
-        }
-    }
-    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !"
-            . " <a href='logout.php'>logout</a><br />";
-}
+//get session information to know the user;
+include '../PagePart/SessionInfo.php';
 
 /*
  * get owner's ID;
@@ -108,7 +83,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
 
         <!--Main part-->
         <div id="div_mainPart">
-            <audio src="../mediaFiles/music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
+            <audio src="../../userData/mediaFiles/music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
             <?php
             $query = "select id,title,addtime from blog where author=" . $q;
             $result = mysql_query($query, $con);

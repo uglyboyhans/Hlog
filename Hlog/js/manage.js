@@ -33,18 +33,10 @@ function unFollow(followingID) {
     xmlHttp.send(null);
 }
 
-function editBlog(blog_id) {
-    if (xmlHttp === null)
-    {
-        alert("Browser does not support HTTP Request");
-        return;
-    }
+function editBlog(blog_id) {//actually it should be in "toPages.js"
     var url = "../manage/editBlog.php";
     url = url + "?q=" + blog_id;
     url = url + "&sid=" + Math.random();
-    xmlHttp.onreadystatechange = stateChanged;
-    xmlHttp.open("GET", url, true);
-    xmlHttp.send(null);
     location.href = url;
 }
 

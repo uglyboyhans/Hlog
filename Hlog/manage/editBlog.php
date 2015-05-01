@@ -4,45 +4,24 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<!--actually it should be in pages-->
 <?php
-session_start();
-$login_ID = $_SESSION["login"];
+//get session information to know the user;
+include '../PagePart/SessionInfo.php';
 
-if ($login_ID === "" || $login_ID === NULL) {
-    echo "<script>"
-    . "location.href='../pages/login.php';"
-    . "</script>";
-} else {
-    $con = mysql_connect("localhost", "loguser", "uglyboy");
-    if (!$con) {
-        die("Could not connect" . mysql_error());
-    } else {
-        mysql_select_db("hlog");
-        $query = "select name from userInfo where userID=".$login_ID;
-        $result = mysql_query($query, $con);
-        while ($row = mysql_fetch_array($result)) {
-            $name=$row["name"];
-        }
-    }
-    echo "Welcome: " . $name . " ! <a href='logout.php'>logout</a><br />";
-}
 $title = $article = ""; //init;
+
 //get id:
 $q = $_GET["q"];
+
 //get original article:
-$con = mysql_connect("localhost", "loguser", "uglyboy");
-if (!$con) {
-    die("Failed to connect:" . mysql_error());
-} else {
-    mysql_select_db("hlog", $con);
-    $query = "select title,article from blog where id=" . $q;
-    $result = mysql_query($query, $con);
-    while ($row = mysql_fetch_array($result)) {
-        $title = $row['title'];
-        $article =$row['article'];
-    }
-    mysql_close($con);
+$query = "select title,article from blog where id=" . $q;
+$result = mysql_query($query, $con);
+while ($row = mysql_fetch_array($result)) {
+    $title = $row['title'];
+    $article = $row['article'];
 }
+mysql_close($con);
 ?>
 <html>
     <head>
