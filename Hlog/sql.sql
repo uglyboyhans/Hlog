@@ -48,6 +48,14 @@ id int(8) primary key not NULL auto_increment,
 author int(8),
 name varchar(30),
 src varchar(200),
+album int(8),
+addTime datetime
+)
+create table photoAlbums(
+id int(8) primary key not NULL auto_increment,
+author int(8),
+name varchar(30),
+cover int(8),
 addTime datetime
 )
 
