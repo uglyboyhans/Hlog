@@ -37,3 +37,10 @@ function MsgBoard(userID){
     url = url + "&sid=" + Math.random();
     location.href=url;
 }
+
+function photoAlbum(album_id){
+    var url = "../pages/photoAlbum.php";
+    url = url + "?q=" + album_id;
+    url = url + "&sid=" + Math.random();
+    location.href=url;
+}

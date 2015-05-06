@@ -15,6 +15,18 @@ include '../PagePart/SessionInfo.php';
     </head>
     <body>
         <a href="UploadPhoto.php">Upload Photo</a>
+        <div id="photoAlbumList">
+            <?php
+            $query = "select id,name from photoalbums where author=" . $login_ID;
+            $result = mysql_query($query, $con);
+            while ($row = mysql_fetch_array($result)) {
+                if (!empty($row["id"])) {
+                    echo "<a href='#' onclick='photoAlbum(".$row["id"].")'>".$row["name"]."</a>";
+                    echo "---";
+                }
+            }
+            ?>
+        </div>
         <div>
             <?php
             $query = "select src from photos where author=" . $login_ID;
@@ -29,5 +41,10 @@ include '../PagePart/SessionInfo.php';
         <div>
             <a href="center.php">Center</a>
         </div>
+        <?php
+        mysql_close($con);
+        ?>
     </body>
+    <script src="../js/toPages.js"></script>
+    <script src="../js/manage.js"></script>
 </html>
