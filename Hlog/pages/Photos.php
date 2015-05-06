@@ -21,7 +21,7 @@ include '../PagePart/SessionInfo.php';
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 if (!empty($row["src"])) {
-                    echo "<img src='" . $row["src"] . "' />";
+                    echo "<img src='" . $row["src"] . "' width='300px' />";
                 }
             }
             ?>

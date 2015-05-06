@@ -52,13 +52,13 @@ include '../PagePart/SessionInfo.php';
         $name = $photo = $photoAlbums = $newAlbumName = ""; //photoAlbums is ID,newAlbum is album name!
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $name = $_POST["name"];
+            $storeName = iconv("UTF-8", "gb2312", $name); //solve coding problem of Chinese character;
             $photoAlbums = $_POST["photoAlbums"];
             $newAlbumName = $_POST["newAlbumName"];
             $photo = $_FILES["photo"];
         }
         //add new album:
         if ($photo !== "") {
-            echo $photo["name"] . "<br />";
             $con = mysql_connect("localhost", "loguser", "uglyboy");
             if (!$con) {
                 die("Could not connect:" . mysql_error());
@@ -79,8 +79,6 @@ include '../PagePart/SessionInfo.php';
                     $photoAlbums = $newAlbumID;
                 }
 
-
-
                 //save file to folder:
                 //if ($photo !== "") {
                 if ($photo["type"] == "image/gif" || $photo["type"] == "image/jpeg" || $photo["type"] == "image/pjpeg") {//file type is correct
@@ -93,15 +91,17 @@ include '../PagePart/SessionInfo.php';
                         $extension = "." . strrev($cutString[0]);
                         //save the file like this in case of duplicate name:
                         if ($name === "") {
-                            $name = $photo["name"] ; //default name is the file name
+                            $name = $photo["name"]; //default name is the file name;
+                            $storeName = iconv("UTF-8", "gb2312", $name); //solve coding problem of Chinese character;
                         }
-                        $photoPath = "../../userData/mediaFiles/photos/" . $login_ID . $photoAlbums . $name. microtime() . rand() . $extension;
+                        $photoPath = "../../userData/mediaFiles/photos/" . $login_ID . $photoAlbums . $storeName . microtime() . rand() . $extension;
                         //save to folder:
                         move_uploaded_file($photo["tmp_name"], $photoPath);
                         //save to mysql:
+                        $photoSrc = iconv("gb2312", "UTF-8", $photoPath);
                         $addTime = date("Y-m-d h:i:s");
                         $query = "insert into photos (author,name,src,album,addTime)"
-                                . "values ($login_ID,'$name','$photoPath',$photoAlbums,'$addTime')";
+                                . "values ($login_ID,'$name','$photoSrc',$photoAlbums,'$addTime')";
                         if (mysql_query($query, $con)) {
                             mysql_close($con);
                             echo "<script>"
