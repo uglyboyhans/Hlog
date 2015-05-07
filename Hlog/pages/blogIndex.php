@@ -74,7 +74,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         <a href="center.php">Center</a>
         <!--userInfo-->
         <div id="div_userInfo">
-<?php echo $doFollow ?><!--<button >follow</button>-->
+            <?php echo $doFollow ?><!--<button >follow</button>-->
             <span id="following">following:<?php echo $followingNum; ?></span>&nbsp;&nbsp;
             <span id="follower">follower:<?php echo $followerNum; ?></span>&nbsp;&nbsp;
             <span id="visitNum">visitor number:<?php echo $newVstNum; ?></span>
@@ -83,7 +83,23 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
 
         <!--Main part-->
         <div id="div_mainPart">
-            <audio src="../../userData/mediaFiles/music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio>
+            <!--audio src="../../userData/mediaFiles/music/曹方 - 春花秋开.mp3" controls="controls">春花秋开</audio-->
+            <h3>Photos</h3>
+            <p>Choose Album:</p>
+            <select onchange="showAlbumCover(this.value)">
+                <option value="">Albums</option>
+                <?php
+                $query = "select id,name from photoAlbums where author=" . $q;
+                $result_albums = mysql_query($query, $con);
+                while ($row = mysql_fetch_array($result_albums)) {
+                    if (!empty($row["id"])) {
+                        echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option> ";
+                    }
+                }
+                ?>
+            </select>
+            <div id="albumCover"></div>
+            <h3>Blog</h3>
             <?php
             $query = "select id,title,addtime from blog where author=" . $q;
             $result = mysql_query($query, $con);
@@ -125,6 +141,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         </div><!--End msgBoard-->
 
     </body>
+    <script src="../js/showAlbumCover.js"></script>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
 </html>

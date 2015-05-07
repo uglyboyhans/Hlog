@@ -67,8 +67,8 @@ include '../PagePart/SessionInfo.php';
                 if ($photoAlbums === "0" && $newAlbumName !== "") {
                     //add new album to mysql:
                     $addTime = date("Y-m-d h:i:s");
-                    $query = "insert into photoAlbums (author,name,addtime) "
-                            . "values ($login_ID,'$newAlbumName','$addTime')";
+                    $query = "insert into photoAlbums (author,name,addtime,cover) "
+                            . "values ($login_ID,'$newAlbumName','$addTime',11)";//add default coverID
                     if (mysql_query($query, $con)) {
                         //get album id that inserting:
                         $newAlbumID = mysql_insert_id($con);

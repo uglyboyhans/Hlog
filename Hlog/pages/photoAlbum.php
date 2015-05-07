@@ -18,7 +18,12 @@ include '../PagePart/SessionInfo.php';
             <select>
                 <?php
                 $albumID = $_GET["q"];
-                $query = "select id,name from photoAlbums where author=" . $login_ID;
+                $query = "select author from photoAlbums where id=" . $albumID;
+                $result_author = mysql_query($query, $con);
+                while ($row = mysql_fetch_array($result_author)) {
+                    $author = $row["author"];
+                }
+                $query = "select id,name from photoAlbums where author=" . $author;
                 $result_albums = mysql_query($query, $con);
                 while ($row = mysql_fetch_array($result_albums)) {
                     if (!empty($row["id"])) {
