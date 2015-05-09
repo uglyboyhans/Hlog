@@ -50,6 +50,8 @@ include '../PagePart/SessionInfo.php';
             ?>
         </div>
         <div>
+            <a href="UploadPhoto.php">Upload photo</a>
+            <a href="PhotoAlbumsList.php">Album List</a><br />
             <a href="center.php">Center</a>
         </div>
         <script src="../js/toPages.js"></script>

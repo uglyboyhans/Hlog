@@ -129,6 +129,7 @@ include '../PagePart/SessionInfo.php';
             }
         </script>
         <div>
+            <a href="PhotoAlbumsList.php">Album List</a><br />
             <a href="center.php">Center</a>
         </div>
     </body>

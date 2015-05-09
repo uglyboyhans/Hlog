@@ -25,7 +25,7 @@ include '../PagePart/SessionInfo.php';
             ?>
         </div>
         <div id="div_mainPart">
-            <a href="Photos.php">My Photos</a>
+            <a href="PhotoAlbumsList.php">My Photos</a>
             <h2>Blogs:</h2>
             <?php
             //mysql has been open at the top;

@@ -16,11 +16,6 @@ if ($albumID !== "") {
                 if ($row["id"] !== '11') {//I don't konw why id number mast be in quot...
                     echo "<img src='" . $row["src"] . "' width='100px' onclick='photoAlbum($albumID)' />";
                 }else{
-                    /*$query = "select max(id) as max_id,src from photos where album=".$albumID;
-                    $result_max_id=mysql_query($query, $con);
-                    while($row_id=  mysql_fetch_array($result_max_id)){
-                        $default_cover=$row_id["max_id"];
-                    }*/
                     $query = "select src from photos where id in (select max(id) as max_id from photos where album=$albumID)";
                     $result_default=  mysql_query($query, $con);
                     while($row_default=  mysql_fetch_array($result_default)){
