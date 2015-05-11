@@ -11,7 +11,7 @@ include '../PagePart/SessionInfo.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Hlog - <?php echo $name; ?>'s Photos</title>
+        <title>Hlog - Photos</title>
     </head>
     <body>
         <a href="UploadPhoto.php">Upload Photo</a>
@@ -33,7 +33,7 @@ include '../PagePart/SessionInfo.php';
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 if (!empty($row["src"])) {
-                    echo "<img src='" . $row["src"] . "' width='300px' />";
+                    echo "<img src='" . $row["src"] . "' width='300px' onclick='viewPhoto(".$row["id"].")' />";
                 }
             }
             ?>

@@ -39,11 +39,11 @@ include '../PagePart/SessionInfo.php';
         </div>
         <div>
             <?php
-            $query = "select src from photos where album=" . $albumID;
+            $query = "select id,src from photos where album=" . $albumID;
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
-                if (!empty($row["src"])) {
-                    echo "<img src='" . $row["src"] . "' width='300px' />";
+                if (!empty($row["id"])) {
+                    echo "<img src='" . $row["src"] . "' width='300px' onclick='viewPhoto(".$row["id"].")' />";
                 }
             }
             mysql_close($con);

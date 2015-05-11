@@ -44,3 +44,10 @@ function photoAlbum(album_id){
     url = url + "&sid=" + Math.random();
     location.href=url;
 }
+
+function viewPhoto(photo_id) {
+    var url = "../pages/viewPhoto.php";
+    url = url + "?q=" + photo_id;
+    url = url + "&sid=" + Math.random();
+    location.href = url;
+}
