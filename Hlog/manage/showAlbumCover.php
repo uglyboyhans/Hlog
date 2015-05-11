@@ -14,12 +14,12 @@ if ($albumID !== "") {
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["id"])) {
                 if ($row["id"] !== '11') {//I don't konw why id number mast be in quot...
-                    echo "<img src='" . $row["src"] . "' width='100px' onclick='photoAlbum($albumID)' />";
+                    echo "<img src='" . $row["src"] . "' width='150px' onclick='photoAlbum($albumID)' />";
                 }else{
                     $query = "select src from photos where id in (select max(id) as max_id from photos where album=$albumID)";
                     $result_default=  mysql_query($query, $con);
                     while($row_default=  mysql_fetch_array($result_default)){
-                        echo "<img src='" . $row_default["src"] . "' width='100px' onclick='photoAlbum($albumID)' />";
+                        echo "<img src='" . $row_default["src"] . "' width='150px' onclick='photoAlbum($albumID)' />";
                     }
                 }
             }

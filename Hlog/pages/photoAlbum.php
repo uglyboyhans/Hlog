@@ -11,7 +11,7 @@ include '../PagePart/SessionInfo.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Hlog - <?php echo $name; ?>'s Photo Album</title>
+        <title>Hlog - Photo Album</title>
     </head>
     <body>
         <div>

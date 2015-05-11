@@ -22,8 +22,14 @@ include '../PagePart/SessionInfo.php';
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
                 echo "<img src='" . $row["src"] . "' width='700px' />";
-                if($row["author"]===$login_ID){
+                if ($row["author"] === $login_ID) {
                     $isAdmin = true;
+                    echo "<p><select>"
+                    . "<option value='manage'>manage</option>"
+                    . "<option value='move' onclick='movePhoto()'>move</option>"
+                    . "<option value='delete' onclick='deletePhoto(" . $photoID . ")'>delete</option>"
+                    . "</select></p>"
+                    . "<iframe width='400px' height='200px' id='iframe_movePhoto' src='../manage/movePhoto.php?q=$photoID' style='display:none'></iframe>";
                 }
             }
         }
