@@ -17,11 +17,12 @@ include '../PagePart/SessionInfo.php';
         <?php
         $isAdmin = false;
         $photoID = $_GET["q"];
-        $query = "select author,src,album from photos where id=" . $photoID;
+        $query = "select author,src,album,name from photos where id=" . $photoID;
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
-                $albumID=$row["album"];
+                $albumID = $row["album"];
+                echo "<h3>".$row["name"]."</h3>";
                 echo "<img src='" . $row["src"] . "' width='700px' />";
                 if ($row["author"] === $login_ID) {
                     $isAdmin = true;
@@ -29,6 +30,7 @@ include '../PagePart/SessionInfo.php';
                     . "<option value='manage'>manage</option>"
                     . "<option value='move' onclick='movePhoto()'>move</option>"
                     . "<option value='delete' onclick='deletePhoto(" . $photoID . ")'>delete</option>"
+                    . "<option value='setAsCover' onclick='setAsCover(" . $photoID . ")'>Set As Cover</option>"
                     . "</select></p>"
                     . "<iframe width='400px' height='200px' id='iframe_movePhoto' src='../manage/movePhoto.php?q=$photoID' style='display:none'></iframe>";
                 }
@@ -80,7 +82,7 @@ include '../PagePart/SessionInfo.php';
         <a href="UploadPhoto.php">Upload photo</a>
         <a href="PhotoAlbumsList.php">Album List</a><br />
         <br /><a href="center.php">Center</a>
-        <script src="../js/deletePhoto.js"></script>
+        <script src="../js/managePhoto.js"></script>
         <script src="../js/manage.js"></script>
         <script src="../js/toPages.js"></script>
     </body>

@@ -21,6 +21,22 @@ function deletePhoto(photoID) {
     }
 }
 
+function setAsCover(photoID) {
+    if (confirm("Sure to set as Album Cover ?") === true) {//make sure
+        if (xmlHttp === null)
+        {
+            alert("Browser does not support HTTP Request");
+            return;
+        }
+        var url = "../manage/setPhotoAlbumCover.php";
+        url = url + "?q=" + photoID;
+        url = url + "&sid=" + Math.random();
+        xmlHttp.onreadystatechange = stateChanged3;
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send(null);
+    }
+}
+
 function stateChanged3()
 {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
