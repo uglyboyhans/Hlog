@@ -105,7 +105,7 @@ include '../PagePart/SessionInfo.php';
                         if (mysql_query($query, $con)) {
                             mysql_close($con);
                             echo "<script>"
-                            . "alert('OK!');location.href='Photos.php';"
+                            . "alert('OK!');location.href='PhotoAlbum.php?q=$photoAlbums';"
                             . "</script>";
                         } else {//insert photo error
                             die("Upload photo error:" . mysql_error());

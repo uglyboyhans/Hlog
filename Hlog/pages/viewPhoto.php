@@ -17,10 +17,11 @@ include '../PagePart/SessionInfo.php';
         <?php
         $isAdmin = false;
         $photoID = $_GET["q"];
-        $query = "select author,src from photos where id=" . $photoID;
+        $query = "select author,src,album from photos where id=" . $photoID;
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
+                $albumID=$row["album"];
                 echo "<img src='" . $row["src"] . "' width='700px' />";
                 if ($row["author"] === $login_ID) {
                     $isAdmin = true;
@@ -75,7 +76,11 @@ include '../PagePart/SessionInfo.php';
             <input type="submit" id="submit_comment" value="Comment" />
             <input type="hidden" value="photo" name="ObType" />
         </form>
+        <a href="PhotoAlbum.php?q=<?php echo $albumID ?>">Back to album</a>
+        <a href="UploadPhoto.php">Upload photo</a>
+        <a href="PhotoAlbumsList.php">Album List</a><br />
         <br /><a href="center.php">Center</a>
+        <script src="../js/deletePhoto.js"></script>
         <script src="../js/manage.js"></script>
         <script src="../js/toPages.js"></script>
     </body>

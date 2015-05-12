@@ -29,7 +29,7 @@ include '../PagePart/SessionInfo.php';
         </div>
         <div>
             <?php
-            $query = "select src from photos where author=" . $login_ID;
+            $query = "select id,src from photos where author=" . $login_ID;
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 if (!empty($row["src"])) {
@@ -45,6 +45,7 @@ include '../PagePart/SessionInfo.php';
         mysql_close($con);
         ?>
     </body>
+    <a href="PhotoAlbumsList.php">Album List</a><br />
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
 </html>

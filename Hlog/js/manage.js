@@ -92,7 +92,7 @@ function deleteMsg(del_id) {
 function reply(reply_id) {// show the form to reply a comment;
     document.getElementById(reply_id).style.display = "block";
 }
-function movePhoto(){
+function movePhoto(){//show the iframe
     document.getElementById("iframe_movePhoto").style.display = "block";
 }
 
