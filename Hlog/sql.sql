@@ -28,10 +28,11 @@ addTime datetime,
 genre varchar(20)
 )
 
-create table fellings(
+create table feelings(
 id int(8) primary key not NULL auto_increment,
 author int(8),
 article TEXT(177),
+picture int(8),
 addTime datetime
 )
 

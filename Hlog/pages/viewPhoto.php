@@ -26,11 +26,12 @@ include '../PagePart/SessionInfo.php';
                 echo "<img src='" . $row["src"] . "' width='700px' />";
                 if ($row["author"] === $login_ID) {
                     $isAdmin = true;
-                    echo "<p><select>"
-                    . "<option value='manage'>manage</option>"
-                    . "<option value='move' onclick='movePhoto()'>move</option>"
-                    . "<option value='delete' onclick='deletePhoto(" . $photoID . ")'>delete</option>"
-                    . "<option value='setAsCover' onclick='setAsCover(" . $photoID . ")'>Set As Cover</option>"
+                    $str_function="managePhoto(this.value,$photoID)";
+                    echo "<p><select onchange=$str_function>"
+                    . "<option value=''>manage</option>"
+                    . "<option value='movePhoto'>move</option>"
+                    . "<option value='deletePhoto'>delete</option>"
+                    . "<option value='setAsCover'>Set As Cover</option>"
                     . "</select></p>"
                     . "<iframe width='400px' height='200px' id='iframe_movePhoto' src='../manage/movePhoto.php?q=$photoID' style='display:none'></iframe>";
                 }

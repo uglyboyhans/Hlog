@@ -13,7 +13,9 @@ if ($login_name === "" || $login_name === NULL) {
     . "location.href='pages/login.php';"
     . "</script>";
 } else {
-    echo "Welcome: " . $login_name . " ! <a href='logout.php'>logout</a><br />";
+    echo "<script>"
+    . "location.href='pages/center.php'"
+    . "</script>";
 }
 ?>
 <html>
@@ -22,9 +24,8 @@ if ($login_name === "" || $login_name === NULL) {
         <title>Hlog - index</title>
     </head>
     <body>
-        
+
         <?php
-        
         ?>
     </body>
 </html>

@@ -3,6 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+function manage(value, id) {
+    if (value === "replyMsg") {
+        replyMsg(id);
+    } else if (value === "deleteMsg") {
+        deleteMsg(id);
+    } else if(value==="editBlog"){
+        editBlog(id);
+    }else if(value==="deleteBlog"){
+        deleteBlog(id);
+    }
+}
+
 var xmlHttp;
 xmlHttp = GetXmlHttpObject();
 function follow(followingID) {
@@ -92,10 +105,6 @@ function deleteMsg(del_id) {
 function reply(reply_id) {// show the form to reply a comment;
     document.getElementById(reply_id).style.display = "block";
 }
-function movePhoto(){//show the iframe
-    document.getElementById("iframe_movePhoto").style.display = "block";
-}
-
 
 function stateChanged()
 {

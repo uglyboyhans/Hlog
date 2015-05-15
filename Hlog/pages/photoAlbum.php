@@ -15,7 +15,7 @@ include '../PagePart/SessionInfo.php';
     </head>
     <body>
         <div>
-            <select>
+            <select onchange="photoAlbum(this.value)">
                 <?php
                 $albumID = $_GET["q"];
                 $query = "select author from photoAlbums where id=" . $albumID;
@@ -28,9 +28,9 @@ include '../PagePart/SessionInfo.php';
                 while ($row = mysql_fetch_array($result_albums)) {
                     if (!empty($row["id"])) {
                         if ($row["id"] === $albumID) {//set selected of this option
-                            echo "<option onclick='photoAlbum(" . $row['id'] . ")' selected='selected'>" . $row['name'] . "</option> ";
+                            echo "<option value='" . $row['id'] . "' selected='selected'>" . $row['name'] . "</option> ";
                         } else {
-                            echo "<option onclick='photoAlbum(" . $row['id'] . ")'>" . $row['name'] . "</option> ";
+                            echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option> ";
                         }
                     }
                 }

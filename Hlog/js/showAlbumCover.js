@@ -14,12 +14,12 @@ function showAlbumCover(albumID) {
     var url = "../manage/showAlbumCover.php";
     url = url + "?q=" + albumID;
     url = url + "&sid=" + Math.random();
-    xmlHttp.onreadystatechange = stateChanged2;
+    xmlHttp.onreadystatechange = stateChangedAlbumCover;
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
 }
 //in case of function name hazard of "stateChange" in 'manage.js':
-function stateChanged2()
+function stateChangedAlbumCover()
 {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
         document.getElementById("albumCover").innerHTML=xmlHttp.responseText;

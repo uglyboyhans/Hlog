@@ -35,10 +35,11 @@ include '../PagePart/SessionInfo.php';
                 }
                 //if admin,can manage:
                 if ($q === $login_ID) {
-                    echo "<p><select>"
-                    . "<option value='manage'>manage</option>"
-                    . "<option value='reply' onclick='replyMsg(" . $row_message['id'] . ")'>reply</option>"
-                    . "<option value='delete' onclick='deleteMsg(" . $row_message['id'] . ")'>delete</option>"
+                    $str_function="manage(this.value," . $row_message['id'] . ")";
+                    echo "<p><select onchange=$str_function>"
+                    . "<option value=''>manage</option>"
+                    . "<option value='replyMsg'>reply</option>"
+                    . "<option value='deleteMsg'>delete</option>"
                     . "</select></p>";
                 }
             }

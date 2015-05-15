@@ -16,7 +16,7 @@ include '../PagePart/SessionInfo.php';
     <body>
         <?php
         $isAdmin = false;
-        $q = $_GET["q"];
+        $q = $_GET["q"];//blogID
 
         $query = "select title,article,addtime,author from blog where id=" . $q;
         $result = mysql_query($query, $con);
@@ -33,10 +33,11 @@ include '../PagePart/SessionInfo.php';
             echo $row['article'];
             if ($login_ID === $row['author']) {//if author,can manage blog~
                 $isAdmin = true;
-                echo "<p><select>"
-                . "<option value='manage'>manage</option>"
-                . "<option value='edit' onclick='editBlog(" . $q . ")'>edit</option>"
-                . "<option value='delete' onclick='deleteBlog(" . $q . ")'>delete</option>"
+                $str_function="manage(this.value,$q)";
+                echo "<p><select onchange=$str_function>"
+                . "<option value=''>manage</option>"
+                . "<option value='editBlog'>edit</option>"
+                . "<option value='deleteBlog'>delete</option>"
                 . "</select></p>";
             }
         }

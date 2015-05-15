@@ -3,6 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+function managePhoto(value,id){
+    if(value==="movePhoto"){
+        movePhoto();
+    }else if(value==="deletePhoto"){
+        deletePhoto(id);
+    }else if (value==="setAsCover"){
+        setAsCover(id);
+    }
+}
+
 var xmlHttp;
 xmlHttp = GetXmlHttpObject();
 function deletePhoto(photoID) {
@@ -15,7 +26,7 @@ function deletePhoto(photoID) {
         var url = "../manage/deletePhoto.php";
         url = url + "?q=" + photoID;
         url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = stateChanged3;
+        xmlHttp.onreadystatechange = stateChangedManagePhoto;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
@@ -31,13 +42,17 @@ function setAsCover(photoID) {
         var url = "../manage/setPhotoAlbumCover.php";
         url = url + "?q=" + photoID;
         url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = stateChanged3;
+        xmlHttp.onreadystatechange = stateChangedManagePhoto;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
 }
 
-function stateChanged3()
+function movePhoto(){//show the iframe
+    document.getElementById("iframe_movePhoto").style.display = "block";
+}
+
+function stateChangedManagePhoto()
 {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
         history.go(-1);
