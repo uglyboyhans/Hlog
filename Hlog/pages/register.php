@@ -48,7 +48,6 @@ and open the template in the editor.
             //connect mysql:
             if ($username != "" && $password != "") {
                 $con = mysql_connect("localhost", "loguser", "uglyboy");
-                ;
                 if (!$con) {
                     die("Failed to connect:" . mysql_error());
                 } else {
