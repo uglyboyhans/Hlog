@@ -51,3 +51,10 @@ function viewPhoto(photo_id) {
     url = url + "&sid=" + Math.random();
     location.href = url;
 }
+
+function Feelings(userID){
+    var url = "../pages/Feelings.php";
+    url = url + "?q=" + userID;
+    url = url + "&sid=" + Math.random();
+    location.href = url;
+}

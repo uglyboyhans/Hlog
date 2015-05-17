@@ -112,6 +112,29 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
             ?>
         </div><!--End Main part-->
 
+        <!--feelings-->
+        <div id="div_feelings">
+            <h2>Feelings</h2>
+            <?php
+            $query = "select article,addTime,picture from feelings where author=" . $q . " order by id desc limit 1";
+            $result_feeling = mysql_query($query, $con);
+            while ($row_feeling = mysql_fetch_array($result_feeling)) {
+                if (!empty($row_feeling)) {
+                    echo $row_feeling["article"]."<br />";
+                    if($row_feeling["picture"]!==""&&$row_feeling["picture"]!==NULL){
+                        $query="select src from photos where id=".$row_feeling["picture"];
+                        $result_pic=  mysql_query($query, $con);
+                        while($row_pic=  mysql_fetch_array($result_pic)){
+                            echo "<img src='".$row_pic["src"]."' width='150px' />";
+                        }
+                    }
+                    echo "<br />...".$row_feeling["addTime"];
+                }
+            }
+            ?>
+            <p><a href="javascript:void(0)" onclick="Feelings(<?php echo $q; ?>)">more>></a></p>
+        </div><!--End feelings-->
+
         <!--msgBoard-->
         <div id="div_msgBoard">
             <h2>Message Board</h2>

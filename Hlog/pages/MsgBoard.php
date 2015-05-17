@@ -15,8 +15,8 @@ include '../PagePart/SessionInfo.php';
     <body>
         <a href="center.php">Center</a>
         <?php
-        $q = $_GET["q"]; //onwerID
-        $query = "select id,visitor,content,addtime,reply from message where userID=" . $q;
+        $q = $_GET["q"]; //ownerID
+        $query = "select id,visitor,content,addtime,reply from message where userID=" . $q . " order by id desc";
         $result_message = mysql_query($query, $con);
         echo "<p>------------------------------</p>";
         if (!empty($result_message)) {

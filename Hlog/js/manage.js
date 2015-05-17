@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+//when manage in <select>:
 function manage(value, id) {
     if (value === "replyMsg") {
         replyMsg(id);
