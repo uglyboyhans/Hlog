@@ -52,9 +52,16 @@ function viewPhoto(photo_id) {
     location.href = url;
 }
 
-function Feelings(userID){
+function Feelings(userID){//go to one's feeling list
     var url = "../pages/Feelings.php";
     url = url + "?q=" + userID;
+    url = url + "&sid=" + Math.random();
+    location.href = url;
+}
+
+function readFeeling(feelingID){
+    var url = "../pages/readFeeling.php";
+    url = url + "?q=" + feelingID;
     url = url + "&sid=" + Math.random();
     location.href = url;
 }

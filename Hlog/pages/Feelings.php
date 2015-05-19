@@ -32,9 +32,9 @@ include '../PagePart/SessionInfo.php';
                 echo "<br />..." . $row_feelings["addTime"];
                 //if admin,can manage:
                 if ($q === $login_ID) {
-                    echo "<button onclick='deleteFeel(" . $row_feelings["id"] . ")'>delete</button>";
+                    echo "<button onclick='deleteFeeling(" . $row_feelings["id"] . ")'>delete</button>";
                 }
-                echo "<button onclick='commentFeel(" . $row_feelings["id"] . ")'>comment</button>";
+                echo "<button onclick='readFeeling(" . $row_feelings["id"] . ")'>comment</button>";
                 echo "<hr />";
             } else {
                 echo "There is no feeling has been published~";

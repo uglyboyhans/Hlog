@@ -14,6 +14,8 @@ function manage(value, id) {
         editBlog(id);
     }else if(value==="deleteBlog"){
         deleteBlog(id);
+    }else if(value==="deleteFeeling"){
+        deleteFeeling(id);
     }
 }
 
@@ -96,6 +98,21 @@ function deleteMsg(del_id) {
         }
         var url = "../manage/deleteMsg.php";
         url = url + "?q=" + del_id;
+        url = url + "&sid=" + Math.random();
+        xmlHttp.onreadystatechange = stateChanged;
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send(null);
+    }
+}
+function deleteFeeling(FeelingID){
+    if (confirm("delete?") === true) {
+        if (xmlHttp === null)
+        {
+            alert("Browser does not support HTTP Request");
+            return;
+        }
+        var url = "../manage/deleteFeeling.php";
+        url = url + "?q=" + FeelingID;
         url = url + "&sid=" + Math.random();
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("GET", url, true);
