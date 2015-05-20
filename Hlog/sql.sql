@@ -163,6 +163,81 @@ create trigger add_blog
 after insert on blog
 for each row
 begin
-insert into readNum
+insert into readNum values ('blog',new.id,0);
+end$$
+
+create trigger delete_blog
+after delete on blog
+for each row
+begin
+delete from readNum where ObType='blog' and relyID=old.id;
+delete from comment where ObType='blog' and relyID=old.id;
+delete from collect where ObType='blog' and relyID=old.id;
+end$$
+
+create trigger add_feeling
+after insert on feelings
+for each row
+begin
+insert into readNum values ('feeling',new.id,0);
+end$$
+
+create trigger delete_feeling
+after delete on feelings
+for each row
+begin
+delete from readNum where ObType='feeling' and relyID=old.id;
+delete from comment where ObType='feeling' and relyID=old.id;
+delete from collect where ObType='feeling' and relyID=old.id;
+end$$
+
+create trigger add_music
+after insert on music
+for each row
+begin
+insert into readNum values ('music',new.id,0);
+end$$
+
+create trigger delete_music
+after delete on music
+for each row
+begin
+delete from readNum where ObType='music' and relyID=old.id;
+delete from comment where ObType='music' and relyID=old.id;
+delete from collect where ObType='music' and relyID=old.id;
+end$$
+
+create trigger add_photo
+after insert on photos
+for each row
+begin
+insert into readNum values ('photo',new.id,0);
+end$$
+
+create trigger delete_photo
+after delete on photos
+for each row
+begin
+delete from readNum where ObType='photo' and relyID=old.id;
+delete from comment where ObType='photo' and relyID=old.id;
+delete from collect where ObType='photo' and relyID=old.id;
+end$$
+
+create trigger add_video
+after insert on video
+for each row
+begin
+insert into readNum values ('video',new.id,0);
+end$$
+
+create trigger delete_video
+after delete on video
+for each row
+begin
+delete from readNum where ObType='video' and relyID=old.id;
+delete from comment where ObType='video' and relyID=old.id;
+delete from collect where ObType='video' and relyID=old.id;
+end$$
+
 
 
