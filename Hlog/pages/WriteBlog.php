@@ -53,19 +53,10 @@ mysql_close($con);
                 $query = "insert into blog (title,author,article,addTime,genre)"
                         . " values ('$title',$login_ID,'$article','$time','$genre')";
                 if (mysql_query($query, $con)) {
-                    //add to readNum(count the read number):
-                    //get blog id:
-                    $relyID = mysql_insert_id($con);
-                    //insert into readNum
-                    $query = "insert into readNum values ('blog',$relyID,0)";
-                    if (mysql_query($query, $con)) {
-                        mysql_close($con);
-                        echo "<script>"
-                        . "alert('OK!');location.href='center.php';"
-                        . "</script>";
-                    } else {//end if(insert into readNum)
-                        die(mysql_error($con));
-                    }
+                    mysql_close($con);
+                    echo "<script>"
+                    . "alert('OK!');location.href='center.php';"
+                    . "</script>";
                 } else {//end if(insert into blog)
                     die(mysql_error($con));
                 }

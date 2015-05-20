@@ -52,6 +52,7 @@ src varchar(200),
 album int(8),
 addTime datetime
 )
+
 create table photoAlbums(
 id int(8) primary key not NULL auto_increment,
 author int(8),
@@ -155,5 +156,13 @@ userID int(8),
 infoType varchar(20),
 addTime datetime
 )
+
+delimiter $$;
+
+create trigger add_blog
+after insert on blog
+for each row
+begin
+insert into readNum
 
 
