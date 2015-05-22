@@ -22,16 +22,18 @@ include '../PagePart/SessionInfo.php';
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
                 $albumID = $row["album"];
-                echo "<h3>".$row["name"]."</h3>";
+                echo "<h3>" . $row["name"] . "</h3>";
                 echo "<img src='" . $row["src"] . "' width='700px' />";
+                //if is admin,can manage photo
                 if ($row["author"] === $login_ID) {
                     $isAdmin = true;
-                    $str_function="managePhoto(this.value,$photoID)";
+                    $str_function = "managePhoto(this.value,$photoID)";
                     echo "<p><select onchange=$str_function>"
                     . "<option value=''>manage</option>"
                     . "<option value='movePhoto'>move</option>"
                     . "<option value='deletePhoto'>delete</option>"
                     . "<option value='setAsCover'>Set As Cover</option>"
+                    . "<option value='renamePhoto'>Rename</option>"
                     . "</select></p>"
                     . "<iframe width='400px' height='200px' id='iframe_movePhoto' src='../manage/movePhoto.php?q=$photoID' style='display:none'></iframe>";
                 }
@@ -54,7 +56,8 @@ include '../PagePart/SessionInfo.php';
                 if (!empty($row_comment['reply'])) {              //in case it's NULL
                     echo "admin reply:" . $row_comment['reply'] . "<br />";
                 }
-                if ($isAdmin) {//if author,can manage comment~
+                //if author,can manage comment:
+                if ($isAdmin) {
                     echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
                     echo "<button onclick='deleteComment(" . $row_comment['id'] . ")'>delete</button>";
                     echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
@@ -70,6 +73,10 @@ include '../PagePart/SessionInfo.php';
         }
         mysql_close($con);
         ?>
+        <form action="../manage/renamePhoto.php?q=<?php echo $photoID; ?>" id="form_renamePhoto" method="post" style="display: none">
+            <input type="text" name="newName" />
+            <input type="submit" value="Rename" />
+        </form>
         <!--
         Comment.......relpy......
         -->

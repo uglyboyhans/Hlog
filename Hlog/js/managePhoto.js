@@ -6,11 +6,15 @@
 
 function managePhoto(value,id){
     if(value==="movePhoto"){
-        movePhoto();
+        //show the iframe:
+        document.getElementById("iframe_movePhoto").style.display = "block";
     }else if(value==="deletePhoto"){
         deletePhoto(id);
     }else if (value==="setAsCover"){
         setAsCover(id);
+    }else if(value==="renamePhoto"){
+        //show the form:
+        document.getElementById("form_renamePhoto").style.display = "block";
     }
 }
 
@@ -46,10 +50,6 @@ function setAsCover(photoID) {
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
-}
-
-function movePhoto(){//show the iframe
-    document.getElementById("iframe_movePhoto").style.display = "block";
 }
 
 function stateChangedManagePhoto()
