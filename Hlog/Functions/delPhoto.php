@@ -15,7 +15,9 @@ function delPhoto($photoID) {
     }
     $query = "delete from photos where id=" . $photoID;
     if (mysql_query($query, $con)) {//delete from mysql
-        unlink($filePath); //delete from folder
+        if(!unlink($filePath)){//delete from folder
+            echo "Unable to delete file on server!";
+        }
     } else {
         die(mysql_error());
     }

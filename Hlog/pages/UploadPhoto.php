@@ -91,7 +91,7 @@ include '../PagePart/SessionInfo.php';
                         $extension = "." . strrev($cutString[0]);
                         //save the file like this in case of duplicate name:
                         if ($name === "") {
-                            $name = $photo["name"]; //default name is the file name;
+                            $name = "untitled"; //default name is the file name;
                             $storeName = iconv("UTF-8", "gb2312", $name); //solve coding problem of Chinese character;
                         }
                         $photoPath = "../../userData/mediaFiles/photos/" . $login_ID . $photoAlbums . $storeName . microtime() . rand() . $extension;

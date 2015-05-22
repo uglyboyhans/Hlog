@@ -53,7 +53,7 @@ function deleteAlbum(AlbumID) {
         var url = "../manage/deletePhotoAlbum.php";
         url = url + "?q=" + AlbumID;
         url = url + "&sid=" + Math.random();
-        xmlHttp.onreadystatechange = stateChangedManagePhoto;
+        xmlHttp.onreadystatechange = stateChangedDelAlbum;
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
@@ -86,6 +86,12 @@ function stateChangedManagePhoto()
 {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
         history.go(-1);
+    }
+}
+function stateChangedDelAlbum()
+{
+    if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
+        location.href="../pages/photoAlbumsList.php";
     }
 }
 
