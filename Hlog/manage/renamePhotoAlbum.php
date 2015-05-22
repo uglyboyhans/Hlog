@@ -1,7 +1,7 @@
 <?php
 
 $newName = ""; //init
-$photoID = $_GET["q"];
+$albumID = $_GET["q"];
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newName = $_POST["newName"];
 }
@@ -11,7 +11,7 @@ if ($newName !== "") {
         die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog", $con);
-        $query="update photos set name='$newName' where id=".$photoID;
+        $query="update photoalbums set name='$newName' where id=".$albumID;
         if(mysql_query($query,$con)){
             mysql_close($con);
             echo "<script>"

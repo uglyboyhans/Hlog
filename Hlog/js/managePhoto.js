@@ -4,17 +4,24 @@
  * and open the template in the editor.
  */
 
-function managePhoto(value,id){
-    if(value==="movePhoto"){
+function managePhoto(value, id) {
+    if (value === "movePhoto") {
         //show the iframe:
         document.getElementById("iframe_movePhoto").style.display = "block";
-    }else if(value==="deletePhoto"){
+    } else if (value === "deletePhoto") {
         deletePhoto(id);
-    }else if (value==="setAsCover"){
+    } else if (value === "setAsCover") {
         setAsCover(id);
-    }else if(value==="renamePhoto"){
+    } else if (value === "renamePhoto") {
         //show the form:
         document.getElementById("form_renamePhoto").style.display = "block";
+    } else if (value === "renameAlbum") {
+        //show the form:
+        document.getElementById("form_renamePhotoAlbum").style.display = "block";
+    } else if (value === "batchDelete") {
+        batchDelete(id);
+    } else if (value === "deleteAlbum") {
+        deleteAlbum(id);
     }
 }
 
@@ -36,6 +43,22 @@ function deletePhoto(photoID) {
     }
 }
 
+function deleteAlbum(AlbumID) {
+    if (confirm("Sure to delete this album?") === true) {//make sure
+        if (xmlHttp === null)
+        {
+            alert("Browser does not support HTTP Request");
+            return;
+        }
+        var url = "../manage/deletePhotoAlbum.php";
+        url = url + "?q=" + AlbumID;
+        url = url + "&sid=" + Math.random();
+        xmlHttp.onreadystatechange = stateChangedManagePhoto;
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send(null);
+    }
+}
+
 function setAsCover(photoID) {
     if (confirm("Sure to set as Album Cover ?") === true) {//make sure
         if (xmlHttp === null)
@@ -50,6 +73,13 @@ function setAsCover(photoID) {
         xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
+}
+
+function batchDelete(albumID) {
+    var url = "../manage/batchDeletePhotos.php";
+    url = url + "?q=" + albumID;
+    url = url + "&sid=" + Math.random();
+    location.href = url;
 }
 
 function stateChangedManagePhoto()
