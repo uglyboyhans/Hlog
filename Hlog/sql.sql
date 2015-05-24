@@ -105,10 +105,10 @@ primary key (ObType,relyID)
 
 create table comment(
 id int(8) primary key not NULL auto_increment,
+userID int(8),
 visitor int(8),
 content varchar(100),
 addTime datetime,
-reply varchar(100),
 ObType varchar(10),
 relyID int(8),
 haveRead varchar(3) default"NO"
@@ -137,27 +137,35 @@ userID int(8),
 visitor int(8),
 content varchar(100),
 addTime datetime,
-reply varchar(100),
 haveRead varchar(3) default"NO"
 )
 
 create table letter(
 id int(8) primary key not NULL auto_increment,
-userID int(8),
-visitor int(8),
+sender int(8),
+reciever int(8),
 content varchar(400),
 addTime datetime,
 haveRead varchar(3) default"NO"
+)
+
+create table reply(
+id int(8) primary key not NULL auto_increment,
+ObType varchar(20) not NULL,
+relyID int(8) not NULL,
+content varchar(147),
+addTime datetime
 )
 
 create table newInfo(
 id int(8) primary key not NULL auto_increment,
 userID int(8),
 infoType varchar(20),
+relyID int(8),
 addTime datetime
 )
 
-delimiter $$;
+delimiter $$
 
 create trigger add_blog
 after insert on blog
@@ -237,6 +245,76 @@ begin
 delete from readNum where ObType='video' and relyID=old.id;
 delete from comment where ObType='video' and relyID=old.id;
 delete from collect where ObType='video' and relyID=old.id;
+end$$
+
+create trigger add_comment
+after insert on comment
+for each row
+begin
+insert into newInfo 
+(userID,infoType,addTime,relyID) values 
+(new.userID,"comment",new.addTime,new.id);
+end$$
+
+create trigger delete_comment
+after delete on comment
+for each row
+begin
+delete from newInfo where infoType='comment' and relyID=old.id;
+end$$
+
+create trigger add_letter
+after insert on letter
+for each row
+begin
+insert into newInfo 
+(userID,infoType,addTime,relyID) values 
+(new.reciever,"letter",new.addTime,new.id);
+end$$
+
+create trigger delete_letter
+after delete on letter
+for each row
+begin
+delete from newInfo where infoType='letter' and relyID=old.id;
+end$$
+
+create trigger add_message
+after insert on message
+for each row
+begin
+insert into newInfo 
+(userID,infoType,addTime,relyID) values 
+(new.userID,"message",new.addTime,new.id);
+end$$
+
+create trigger delete_message
+after delete on message
+for each row
+begin
+delete from newInfo where infoType='message' and relyID=old.id;
+end$$
+
+create trigger add_reply
+after insert on reply
+for each row
+begin
+declare userID int default 0;
+if new.ObType='comment' then
+select visitor into userID from comment where id=new.relyID;
+elseif new.ObType='message' then
+select visitor into userID from message where id=new.relyID;
+end if;
+insert into newInfo 
+(userID,infoType,addTime,relyID) values 
+(userID,"reply",new.addTime,new.id);
+end$$
+
+create trigger delete_reply
+after delete on reply
+for each row
+begin
+delete from newInfo where infoType='reply' and relyID=old.id;
 end$$
 
 

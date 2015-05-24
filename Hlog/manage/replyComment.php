@@ -9,26 +9,29 @@ if ($login_ID === "" || $login_ID === NULL) {
     . "</script>";
 }
 //init:
-$reply = "";
-$id="";
+$content = "";
+$relyID="";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $reply = str_replace(["\r\n", "\r", "\n"], "<br />", $_POST["reply"]);
-    $reply = str_replace("'", "\'", $reply);
-    $id=$_POST["id"];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $content = str_replace(["\r\n", "\r", "\n"], "<br />", $_POST["content"]);
+    $content = str_replace("'", "\'", $content);
+    $relyID=$_POST["relyID"];
 }
-if ($reply != "" && $id != "") {
+if ($content != "" && $relyID != "") {
     $con = mysql_connect("localhost","loguser","uglyboy");
     if (!$con) {
         die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog", $con);
-        $query = "update comment set reply='$reply' where id=". $id;
+        $query = "insert into reply (ObType,relyID,content,addTime) "
+                . "values ('comment',$relyID,'$content',now())";
         if (mysql_query($query, $con)) {
             mysql_close($con);
             echo "<script>"
             . "alert('OK!');history.back();"
             . "</script>";
+        }else{
+            echo mysql_error();
         }
     }
 }

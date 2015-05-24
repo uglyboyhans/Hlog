@@ -17,15 +17,18 @@ include '../PagePart/SessionInfo.php';
         <?php
         $isAdmin = false;
         $photoID = $_GET["q"];
-        $query = "select author,src,album,name from photos where id=" . $photoID;
+        $query = "select photos.author,photos.src,photos.album,photos.name,userInfo.name as authorName "
+                . "from photos,userInfo where userInfo.userID=photos.author and photos.id=" . $photoID;
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
+                $authorID=$row["author"];
+                $authorName = $row["authorName"];
                 $albumID = $row["album"];
                 echo "<h3>" . $row["name"] . "</h3>";
                 echo "<img src='" . $row["src"] . "' width='700px' />";
                 //if is admin,can manage photo
-                if ($row["author"] === $login_ID) {
+                if ($authorID === $login_ID) {
                     $isAdmin = true;
                     $str_function = "managePhoto(this.value,$photoID)";
                     echo "<p><select onchange=$str_function>"
@@ -41,29 +44,35 @@ include '../PagePart/SessionInfo.php';
         }
         echo "<p>**********************************************************</p>";
         echo "Comments:<br />-------------------------------------<br />";
-        $query = "select id,visitor,content,addtime,reply from comment where ObType='photo' and relyID=$photoID";
+        $query = "select id,visitor,content,addtime from comment where ObType='photo' and relyID=$photoID";
         $result_comment = mysql_query($query, $con);
         if (!empty($result_comment)) {
             while ($row_comment = mysql_fetch_array($result_comment)) {
+                //get this comment:
                 $query = "select name from userInfo where userID =" . $row_comment['visitor'];
                 $result = mysql_query($query, $con);
                 while ($row1 = mysql_fetch_array($result)) {
                     $visitor = $row1['name'];
                 }
                 echo "<a href='#' onclick='blogIndex(" . $row_comment['visitor'] . ")'>" . $visitor . "</a> says:<br />";
-                echo $row_comment['content'] . "<br />";
-                echo "at " . $row_comment['addtime'] . "<br />";
-                if (!empty($row_comment['reply'])) {              //in case it's NULL
-                    echo "admin reply:" . $row_comment['reply'] . "<br />";
+                echo $row_comment['content'] ;
+                echo "(" . $row_comment['addtime'] . ")<br />";
+                //get all reply:
+                $query = "select content,addTime from reply where Obtype='comment' and relyID=". $row_comment['id'] ;
+                $result_reply=  mysql_query($query, $con);
+                while($row_reply=  mysql_fetch_array($result_reply)){
+                    echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='blogIndex(" . $authorID . ")'>" . $authorName . "</a> reply:";
+                    echo "&nbsp;".$row_reply["content"];
+                    echo "(".$row_reply["addTime"].")<br />";
                 }
-                //if author,can manage comment:
-                if ($isAdmin) {
+
+                if ($isAdmin) {//if author,can manage comment~
                     echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
                     echo "<button onclick='deleteComment(" . $row_comment['id'] . ")'>delete</button>";
                     echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
                     . "<form action='../manage/replyComment.php' method='post'>"
-                    . "<input type='hidden' name='id' value=" . $row_comment['id'] . " />"
-                    . "<textarea cols='22' rows='3' name='reply'></textarea>"
+                    . "<input type='hidden' name='relyID' value=" . $row_comment['id'] . " />"
+                    . "<textarea cols='22' rows='3' name='content'></textarea>"
                     . "<input type='submit' value='reply' />"
                     . "</form>"
                     . "</div>";
@@ -82,6 +91,7 @@ include '../PagePart/SessionInfo.php';
         -->
         <p>----------------------------------------------------</p>
         <form action="../manage/comment.php?q=<?php echo $photoID; ?>" id="form_comment" method="post">
+            <input type="hidden" value="<?php echo $authorID; ?>" name="userID" />
             <textarea cols="55" rows="11" name="content"></textarea>
             <input type="submit" id="submit_comment" value="Comment" />
             <input type="hidden" value="photo" name="ObType" />

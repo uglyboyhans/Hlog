@@ -15,6 +15,7 @@ $relyID = $_GET["q"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = str_replace("'", "\'", $_POST["content"]);
     $ObType = $_POST["ObType"];
+    $userID=$_POST["userID"];
 }
 if ($content != "" && $relyID != "") {
     $con = mysql_connect("localhost", "loguser", "uglyboy");
@@ -23,8 +24,8 @@ if ($content != "" && $relyID != "") {
     } else {
         mysql_select_db("hlog", $con);
         $addtime = date("Y-m-d h:i:s");
-        $query = "insert into comment (visitor,content,addtime,ObType,relyID)"
-                . " values ($login_ID,'$content','$addtime','$ObType',$relyID)";
+        $query = "insert into comment (visitor,userID,content,addtime,ObType,relyID)"
+                . " values ($login_ID,$userID,'$content','$addtime','$ObType',$relyID)";
         if (mysql_query($query, $con)) {
             mysql_close($con);
             echo "<script>"

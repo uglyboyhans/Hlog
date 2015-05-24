@@ -48,23 +48,27 @@ include '../PagePart/SessionInfo.php';
         <div id="div_msgBoard">
             <h2>Message Board</h2>
             <?php
-            $query = "select id,visitor,content,addtime,reply from message where userID=" . $login_ID." order by id desc limit 3";
+            $query = "select id,visitor,content,addtime from message where userID=" . $login_ID . " order by id desc limit 3";
             $result_message = mysql_query($query, $con);
             echo "<p>------------------------------</p>";
             if (!empty($result_message)) {
                 while ($row_message = mysql_fetch_array($result_message)) {
                     $query = "select name from userInfo where userID =" . $row_message['visitor'];
-                    $result_userID = mysql_query($query, $con);
-                    while ($row1 = mysql_fetch_array($result_userID)) {
+                    $result_visitorName = mysql_query($query, $con);
+                    while ($row1 = mysql_fetch_array($result_visitorName)) {
                         $visitor = $row1['name'];
                     }
                     echo "<a href='#' onclick='blogIndex(" . $row_message['visitor'] . ")'>" . $visitor . "</a> :<br />";
                     echo $row_message['content'] . "<br />";
                     echo "------------------" . $row_message['addtime'] . "<br />";
-                    if (!empty($row_message['reply'])) {              //in case it's NULL
-                        echo "admin reply:" . $row_message['reply'] . "<br />";
+                    $query = "select content,addTime from reply where Obtype='message' and relyID=" . $row_message['id'];
+                    $result_reply = mysql_query($query, $con);
+                    while ($row_reply = mysql_fetch_array($result_reply)) {
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='blogIndex(" . $login_ID. ")'>" . $name . "</a> reply:";
+                        echo "&nbsp;" . $row_reply["content"];
+                        echo "(" . $row_reply["addTime"] . ")<br />";
                     }
-                    $str_function="manage(this.value," . $row_message['id'] . ")";
+                    $str_function = "manage(this.value," . $row_message['id'] . ")";
                     echo "<p><select onchange=$str_function>"
                     . "<option value=''>manage</option>"
                     . "<option value='replyMsg'>reply</option>"
