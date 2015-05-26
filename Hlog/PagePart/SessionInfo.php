@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $login_ID = $_SESSION["login"];
 
@@ -18,13 +19,14 @@ if ($login_ID === "" || $login_ID === NULL) {
             $name = $row["name"];
             if ($row["icon"] !== NULL && $row["icon"] !== "") {
                 $icon = $row["icon"];
-            }else{
-                $icon="../mediaFiles/icon/default.jpg";
+            } else {
+                $icon = "../mediaFiles/icon/default.jpg";
             }
         }
     }
-    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !"
-            . " <a href='logout.php'>logout</a><br />";
+    echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !";
+    echo "&nbsp;&nbsp;&nbsp;<a href='../pages/newInfo.php'>New Information(<span id='InfoNum'></span>)</a>";
+    echo "&nbsp;&nbsp;&nbsp;<a href='logout.php'>logout</a><br />";
 }
 
 

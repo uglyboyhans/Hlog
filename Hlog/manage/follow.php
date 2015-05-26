@@ -20,19 +20,11 @@ if (!$con) {
     die("Could not connect:" . mysql_error());
 } else {
     mysql_select_db("hlog", $con);
-    $query = "select following from following where userID=$login_ID and following=$q";
-    $result = mysql_query($query, $con);
-    while ($row=  mysql_fetch_array($result)) {
-        echo "<script>"
-        . "history.back();"
-        . "</script>";
-    } //else {
-        $query = "insert into following (userID,following) values ($login_ID,$q)";
-        if (mysql_query($query, $con)) {
-            mysql_close($con);
-            exit;
-        } else {
-            die(mysql_error());
-        }
-    //}
+    $query = "insert into following (userID,following) values ($login_ID,$q)";
+    if (mysql_query($query, $con)) {
+        mysql_close($con);
+        exit;
+    } else {
+        die(mysql_error());
+    }
 }

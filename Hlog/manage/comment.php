@@ -23,9 +23,8 @@ if ($content != "" && $relyID != "") {
         die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog", $con);
-        $addtime = date("Y-m-d h:i:s");
         $query = "insert into comment (visitor,userID,content,addtime,ObType,relyID)"
-                . " values ($login_ID,$userID,'$content','$addtime','$ObType',$relyID)";
+                . " values ($login_ID,$userID,'$content',now(),'$ObType',$relyID)";
         if (mysql_query($query, $con)) {
             mysql_close($con);
             echo "<script>"

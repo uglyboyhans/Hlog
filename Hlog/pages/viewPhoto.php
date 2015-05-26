@@ -22,7 +22,7 @@ include '../PagePart/SessionInfo.php';
         $result = mysql_query($query, $con);
         while ($row = mysql_fetch_array($result)) {
             if (!empty($row["src"])) {
-                $authorID=$row["author"];
+                $authorID = $row["author"];
                 $authorName = $row["authorName"];
                 $albumID = $row["album"];
                 echo "<h3>" . $row["name"] . "</h3>";
@@ -55,27 +55,26 @@ include '../PagePart/SessionInfo.php';
                     $visitor = $row1['name'];
                 }
                 echo "<a href='#' onclick='blogIndex(" . $row_comment['visitor'] . ")'>" . $visitor . "</a> says:<br />";
-                echo $row_comment['content'] ;
+                echo $row_comment['content'];
                 echo "(" . $row_comment['addtime'] . ")<br />";
                 //get all reply:
-                $query = "select content,addTime from reply where Obtype='comment' and relyID=". $row_comment['id'] ;
-                $result_reply=  mysql_query($query, $con);
-                while($row_reply=  mysql_fetch_array($result_reply)){
-                    echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='blogIndex(" . $authorID . ")'>" . $authorName . "</a> reply:";
-                    echo "&nbsp;".$row_reply["content"];
-                    echo "(".$row_reply["addTime"].")<br />";
+                $query = "select userInfo.name,reply.sender,reply.content,reply.addTime from reply,userInfo where userInfo.userID=reply.sender and reply.Obtype='comment' and reply.relyID=" . $row_comment['id'];
+                $result_reply = mysql_query($query, $con);
+                while ($row_reply = mysql_fetch_array($result_reply)) {
+                    echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='blogIndex(" . $row_reply["sender"] . ")'>" . $row_reply["name"] . "</a> reply:";
+                    echo "&nbsp;" . $row_reply["content"];
+                    echo "(" . $row_reply["addTime"] . ")<br />";
                 }
-
+                echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
+                echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
+                . "<form action='../manage/replyComment.php' method='post'>"
+                . "<input type='hidden' name='relyID' value=" . $row_comment['id'] . " />"
+                . "<textarea cols='22' rows='3' name='content'></textarea>"
+                . "<input type='submit' value='reply' />"
+                . "</form>"
+                . "</div>";
                 if ($isAdmin) {//if author,can manage comment~
-                    echo "<button onclick='reply(" . $row_comment['id'] . ")'>reply</button>";
                     echo "<button onclick='deleteComment(" . $row_comment['id'] . ")'>delete</button>";
-                    echo "<div id='" . $row_comment['id'] . "' style='display:none'>"
-                    . "<form action='../manage/replyComment.php' method='post'>"
-                    . "<input type='hidden' name='relyID' value=" . $row_comment['id'] . " />"
-                    . "<textarea cols='22' rows='3' name='content'></textarea>"
-                    . "<input type='submit' value='reply' />"
-                    . "</form>"
-                    . "</div>";
                 }
                 echo "<p>------------------------------</p>";
             }

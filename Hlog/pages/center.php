@@ -83,4 +83,5 @@ include '../PagePart/SessionInfo.php';
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

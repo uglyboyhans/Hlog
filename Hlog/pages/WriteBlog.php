@@ -45,13 +45,11 @@ mysql_close($con);
             if (!$con) {
                 die("Failed to connect:" . mysql_error());
             } else {
-                //init time:
-                $time = date("Y-m-d h:i:s");
                 //select db:
                 mysql_select_db("hlog", $con);
                 //insert blog:
                 $query = "insert into blog (title,author,article,addTime,genre)"
-                        . " values ('$title',$login_ID,'$article','$time','$genre')";
+                        . " values ('$title',$login_ID,'$article',now(),'$genre')";
                 if (mysql_query($query, $con)) {
                     mysql_close($con);
                     echo "<script>"

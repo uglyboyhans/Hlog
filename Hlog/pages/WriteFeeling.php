@@ -44,14 +44,13 @@ mysql_close($con);
             if (!$con) {
                 die("Failed to connect:" . mysql_error());
             } else {
-                $addTime = date("Y-m-d h:i:s");
                 mysql_select_db("hlog", $con);
                 if ($picture === "" || $picture === NULL) {
                     $query = "insert into feelings (author,article,addtime)"
                             . "values($login_ID,'$article','$addTime')";
                 } else {
                     $query = "insert into feelings (author,article,addtime,picture)"
-                            . "values($login_ID,'$article','$addTime',$picture)";
+                            . "values($login_ID,'$article',now(),$picture)";
                 }
                 if (mysql_query($query, $con)) {
                     mysql_close($con);

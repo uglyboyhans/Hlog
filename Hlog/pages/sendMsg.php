@@ -29,9 +29,8 @@ include '../PagePart/SessionInfo.php';
             $userID = $_POST["userID"];
         }
         if ($content !== "") {
-            $addtime = date("Y-m-d h:i:s");
             $query = "insert into message (userID,visitor,content,addtime)"
-                    . "values($userID,$login_ID,'$content','$addtime')";
+                    . "values($userID,$login_ID,'$content',now()')";
             if (mysql_query($query, $con)) {
                 mysql_close($con);
                 echo "<script>"

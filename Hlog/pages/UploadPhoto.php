@@ -66,9 +66,8 @@ include '../PagePart/SessionInfo.php';
                 mysql_select_db("hlog", $con);
                 if ($photoAlbums === "0" && $newAlbumName !== "") {
                     //add new album to mysql:
-                    $addTime = date("Y-m-d h:i:s");
                     $query = "insert into photoAlbums (author,name,addtime,cover) "
-                            . "values ($login_ID,'$newAlbumName','$addTime',11)";//add default coverID
+                            . "values ($login_ID,'$newAlbumName',now()',11)"; //add default coverID
                     if (mysql_query($query, $con)) {
                         //get album id that inserting:
                         $newAlbumID = mysql_insert_id($con);
@@ -99,9 +98,8 @@ include '../PagePart/SessionInfo.php';
                         move_uploaded_file($photo["tmp_name"], $photoPath);
                         //save to mysql:
                         $photoSrc = iconv("gb2312", "UTF-8", $photoPath);
-                        $addTime = date("Y-m-d h:i:s");
                         $query = "insert into photos (author,name,src,album,addTime)"
-                                . "values ($login_ID,'$name','$photoSrc',$photoAlbums,'$addTime')";
+                                . "values ($login_ID,'$name','$photoSrc',$photoAlbums,now())";
                         if (mysql_query($query, $con)) {
                             mysql_close($con);
                             echo "<script>"

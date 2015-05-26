@@ -260,6 +260,7 @@ create trigger delete_comment
 after delete on comment
 for each row
 begin
+delete from reply where ObType='comment' and relyID=old.id;
 delete from newInfo where infoType='comment' and relyID=old.id;
 end$$
 
@@ -292,6 +293,7 @@ create trigger delete_message
 after delete on message
 for each row
 begin
+delete from reply where ObType='message' and relyID=old.id;
 delete from newInfo where infoType='message' and relyID=old.id;
 end$$
 

@@ -23,8 +23,8 @@ if ($content != "" && $relyID != "") {
         die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog", $con);
-        $query = "insert into reply (ObType,relyID,content,addTime) "
-                . "values ('comment',$relyID,'$content',now())";
+        $query = "insert into reply (sender,ObType,relyID,content,addTime) "
+                . "values ($login_ID,'comment',$relyID,'$content',now())";
         if (mysql_query($query, $con)) {
             mysql_close($con);
             echo "<script>"
