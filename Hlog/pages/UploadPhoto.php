@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Upload Photos</title>
     </head>
-    <body onload="displayInputNewAlbum()">
+    <body onload="displayInputNewAlbum();NewInfoNum()">
         <form id="form_uploadPhoto" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
             <label>Photo's name:<input name="name" type="text" size="30" /></label>
             <br />
@@ -126,6 +126,7 @@ include '../PagePart/SessionInfo.php';
                 setTimeout("displayInputNewAlbum()", 30);
             }
         </script>
+        <script src="../js/newInfo.js"></script>
         <div>
             <a href="PhotoAlbumsList.php">Album List</a><br />
             <a href="center.php">Center</a>

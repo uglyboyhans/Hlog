@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Read Feeling</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <?php
         $isAdmin = false;
         $q = $_GET["q"]; //feelingID
@@ -99,6 +99,7 @@ include '../PagePart/SessionInfo.php';
         <br /><a href="center.php">Center</a>
         <script src="../js/manage.js"></script>
         <script src="../js/toPages.js"></script>
+        <script src="../js/newInfo.js"></script>
     </body>
 </html>
 

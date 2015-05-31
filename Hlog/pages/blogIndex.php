@@ -70,7 +70,7 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
         <meta charset="UTF-8">
         <title>Hlog - <?php echo $owner_name; ?>'s blog index</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <a href="center.php">Center</a>
         <!--userInfo-->
         <div id="div_userInfo">
@@ -171,4 +171,5 @@ while ($row_vstNum = mysql_fetch_array($result_vstNum)) {
     <script src="../js/showAlbumCover.js"></script>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Individual Center</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div id="div_topGuide">
             <!--a href="../index.php"--><img alt="hlog" src="#" /><!--/a-->
             <a href="WriteBlog.php">Write Blog</a>

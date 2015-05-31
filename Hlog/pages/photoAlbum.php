@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Photo Album</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div>
             <!--get all albums by this author,and make it into <select>-->
             jump to:<select onchange="photoAlbum(this.value)">
@@ -81,5 +81,6 @@ include '../PagePart/SessionInfo.php';
         <script src="../js/managePhoto.js"></script>
         <script src="../js/toPages.js"></script>
         <script src="../js/manage.js"></script>
+        <script src="../js/newInfo.js"></script>
     </body>
 </html>

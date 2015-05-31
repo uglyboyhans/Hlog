@@ -151,9 +151,11 @@ haveRead varchar(3) default"NO"
 
 create table reply(
 id int(8) primary key not NULL auto_increment,
+sender int(8),
 ObType varchar(20) not NULL,
 relyID int(8) not NULL,
 content varchar(147),
+haveRead varchar(3) default 'NO',
 addTime datetime
 )
 
@@ -319,5 +321,18 @@ begin
 delete from newInfo where infoType='reply' and relyID=old.id;
 end$$
 
-
+create trigger delete_newInfo
+after delete on newInfo
+for each row
+begin
+if old.infoType='comment' then
+update comment set haveRead='yes' where id=old.relyID;
+elseif old.infoType='message' then
+update message set haveRead='yes' where id=old.relyID;
+elseif old.infoType='letter' then
+update letter set haveRead='yes' where id=old.relyID;
+elseif old.infoType='reply' then
+update reply set haveRead='yes' where id=old.relyID;
+end if;
+end$$
 

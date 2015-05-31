@@ -12,7 +12,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Feelings</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <a href="center.php">Center</a>
         <?php
         $q = $_GET["q"]; //ownerID
@@ -46,4 +46,5 @@ include '../PagePart/SessionInfo.php';
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

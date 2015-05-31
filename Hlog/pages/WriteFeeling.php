@@ -14,7 +14,7 @@ mysql_close($con);
         <meta charset="UTF-8">
         <title>Hlog - Write Feeling</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <textarea cols="50" rows="7" name="article" id="input_feeling"></textarea>
@@ -71,4 +71,5 @@ mysql_close($con);
     <script src="../js/showAlbumCover.js"></script>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Photo Album List</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <a href="Photos.php">All photos</a>&nbsp;
         <a href="UploadPhoto.php">Upload photo</a><br />
         <?php
@@ -46,4 +46,5 @@ include '../PagePart/SessionInfo.php';
     </body>
     <script src="../js/toPages.js"></script>
     <script src="../js/manage.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - reply message</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <?php
         $id = $_GET["q"];
         $query = "select visitor,content,addtime from message where id=" . $id;
@@ -71,5 +71,6 @@ include '../PagePart/SessionInfo.php';
         <br /><a href="center.php">Center</a>
     </body>
     <script src="../js/toPages.js"></script>
+    <script src="../js/newInfo.js"></script>
     <script src="../js/manage.js"></script>
 </html>

@@ -25,8 +25,6 @@ if ($login_ID === "" || $login_ID === NULL) {
         }
     }
     echo "<img src='$icon' width='40px' /> Welcome: " . $name . " !";
-    echo "&nbsp;&nbsp;&nbsp;<a href='../pages/newInfo.php'>New Information(<span id='InfoNum'></span>)</a>";
+    echo "&nbsp;&nbsp;&nbsp;<a href='../pages/newInfo.php'>New Information(<span id='NewInfoNum'></span>)</a>";
     echo "&nbsp;&nbsp;&nbsp;<a href='logout.php'>logout</a><br />";
 }
-
-

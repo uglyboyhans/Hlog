@@ -15,7 +15,7 @@ mysql_close($con);
         <title>Hlog - create</title>
         <script src="../../ckeditor/ckeditor.js"></script>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <label>Title:<input type="text" placeholder="your title.." id="input_title" name="title"/></label><br />
@@ -62,4 +62,5 @@ mysql_close($con);
         }
         ?>
     </body>
+    <script src="../js/newInfo.js"></script>
 </html>

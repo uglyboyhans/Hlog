@@ -14,7 +14,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - Send Message</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div id="div_sendMsg">
             <form id="form_sendMsg" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <textarea name="content" cols="30" rows="5"></textarea>
@@ -30,7 +30,7 @@ include '../PagePart/SessionInfo.php';
         }
         if ($content !== "") {
             $query = "insert into message (userID,visitor,content,addtime)"
-                    . "values($userID,$login_ID,'$content',now()')";
+                    . "values($userID,$login_ID,'$content',now())";
             if (mysql_query($query, $con)) {
                 mysql_close($con);
                 echo "<script>"
@@ -44,4 +44,5 @@ include '../PagePart/SessionInfo.php';
         <a href="center.php">Center</a>
     </body>
     <script src="../js/toPages.js"></script>
+    <script src="../js/newInfo.js"></script>
 </html>

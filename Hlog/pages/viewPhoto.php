@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - View Photo</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <?php
         $isAdmin = false;
         $photoID = $_GET["q"];
@@ -102,5 +102,6 @@ include '../PagePart/SessionInfo.php';
         <script src="../js/managePhoto.js"></script>
         <script src="../js/manage.js"></script>
         <script src="../js/toPages.js"></script>
+        <script src="../js/newInfo.js"></script>
     </body>
 </html>

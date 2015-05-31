@@ -50,7 +50,7 @@ if ($login_ID === "" || $login_ID === NULL) {
         <meta charset="UTF-8">
         <title>Hlog - settings</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <div id="div_setting">
             <br />
             <form id="form_setting" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
@@ -169,5 +169,6 @@ if ($login_ID === "" || $login_ID === NULL) {
         }//end connect success;
         ?>
         <br /><a href="center.php">Center</a>
+        <script src="../js/newInfo.js"></script>
     </body>
 </html>

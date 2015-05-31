@@ -13,7 +13,7 @@ include '../PagePart/SessionInfo.php';
         <meta charset="UTF-8">
         <title>Hlog - read</title>
     </head>
-    <body>
+    <body onload="NewInfoNum()">
         <?php
         $isAdmin = false;
         $q = $_GET["q"]; //blogID
@@ -88,6 +88,7 @@ include '../PagePart/SessionInfo.php';
         <br /><a href="center.php">Center</a>
         <script src="../js/manage.js"></script>
         <script src="../js/toPages.js"></script>
+        <script src="../js/newInfo.js"></script>
     </body>
 </html>
 
