@@ -21,22 +21,21 @@ include '../PagePart/SessionInfo.php';
                 . "from photoAlbums,Photos "
                 . "where photoAlbums.cover=photos.id "
                 . "and photoAlbums.author=" . $login_ID;
-        $result=  mysql_query($query, $con);
-        while ($row=  mysql_fetch_array($result)){
-            echo "<div style='border-style: solid; border-width: 2px;'>";
-            if(!empty($row["id"])){
+        $result = mysql_query($query, $con);
+        while ($row = mysql_fetch_array($result)) {
+            echo "<div style='width:40%;border-style: solid; border-width: 2px;'>";
+            if (!empty($row["id"])) {
                 if ($row["p_id"] !== '11') {//I don't konw why id number mast be in quot...
-                    echo "<img src='" . $row["src"] . "' width='100px' onclick='photoAlbum(".$row["id"].")' />";
-                }else{//show default cover
-                    $query = "select src from photos where id in (select max(id) as max_id from photos where album=".$row["id"].")";
-                    $result_default=  mysql_query($query, $con);
-                    while($row_default=  mysql_fetch_array($result_default)){
-                        echo "<img src='" . $row_default["src"] . "' width='100px' onclick='photoAlbum(".$row["id"].")' />";
+                    echo "<img src='" . $row["src"] . "' width='100px' onclick='photoAlbum(" . $row["id"] . ")' />";
+                } else {//show default cover
+                    $query = "select src from photos where id in (select max(id) as max_id from photos where album=" . $row["id"] . ")";
+                    $result_default = mysql_query($query, $con);
+                    while ($row_default = mysql_fetch_array($result_default)) {
+                        echo "<img src='" . $row_default["src"] . "' width='100px' onclick='photoAlbum(" . $row["id"] . ")' />";
                     }
                 }
-                
             }
-            echo "<br />".$row["name"];
+            echo "<br />" . $row["name"];
             echo "</div>";
         }
         ?>
