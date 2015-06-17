@@ -24,26 +24,47 @@ include '../PagePart/SessionInfo.php';
         while ($row_newInfo = mysql_fetch_array($result_newInfo)) {
             //use "if else" get infoType to know how echo:
             if ($row_newInfo["infoType"] === "comment") {
-                $query = "select userInfo.name,comment.ObType,comment.relyID from userInfo,comment "
+                $query = "select userInfo.name,comment.ObType,comment.relyID,comment.content from userInfo,comment "
                         . "where userInfo.userID=comment.visitor and "
                         . "comment.id=" . $row_newInfo["relyID"];
                 $result_comment = mysql_query($query, $con);
                 while ($row_comment=  mysql_fetch_array($result_comment)){
                     //use "if else" get ObType to know comment what:
                     if($row_comment["ObType"]==="blog"){
-                        echo $row_comment["name"]." comment your blog.";
-                        echo " <a href='#' onclick='readBlog(" . $row_comment["relyID"] . ")'>Check</a><br />";
+                        $query="select title from blog where id=". $row_comment["relyID"];
+                        $result_blog_title=  mysql_query($query, $con);
+                        while($row_blog_title=  mysql_fetch_array($result_blog_title)){
+                            $blog_title=$row_blog_title["title"];
+                        }
+                        echo $row_comment["name"]." comment your blog '$blog_title':<br />\""
+                                . $row_comment["content"]
+                                . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
+                        echo " <br /><a href='#' onclick='readBlog(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }else if($row_comment["ObType"]==="photo"){
-                        echo $row_comment["name"]." comment your photo.";
-                        echo " <a href='#' onclick='viewPhoto(" . $row_comment["relyID"] . ")'>Check</a><br />";
+                        $query="select name from photos where id=". $row_comment["relyID"];
+                        $result_photo_name=  mysql_query($query, $con);
+                        while($row_photo_name=  mysql_fetch_array($result_photo_name)){
+                            $photo_name=$row_photo_name["name"];
+                        }
+                        echo $row_comment["name"]." comment your photo:'$photo_name'<br />\""
+                                . $row_comment["content"]
+                                . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
+                        echo " <br /><a href='#' onclick='viewPhoto(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }else if($row_comment["ObType"]==="feeling"){
-                        echo $row_comment["name"]." comment your feeling.";
-                        echo " <a href='#' onclick='readFeeling(" . $row_comment["relyID"] . ")'>Check</a><br />";
+                        $query="select article from feelings where id=". $row_comment["relyID"];
+                        $result_feelings=  mysql_query($query, $con);
+                        while($row_feelings=  mysql_fetch_array($result_feelings)){
+                            $feelings=$row_feelings["article"];
+                        }
+                        echo $row_comment["name"]." comment your feeling '$feelings'<br />\""
+                                . $row_comment["content"]
+                                . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
+                        echo "<br /> <a href='#' onclick='readFeeling(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }
                 }
