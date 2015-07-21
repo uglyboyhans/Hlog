@@ -7,7 +7,7 @@ if ($albumID !== "") {
         die("Could not connect" . mysql_error());
     } else {
         mysql_select_db("hlog");
-        $query = "select photoAlbums.cover,Photos.src,Photos.id from photoAlbums,Photos "
+        $query = "select photoAlbums.cover,Photos.src,Photos.id from photoAlbums,photos "
                 . "where photoAlbums.cover=photos.id "
                 . "and photoAlbums.id=" . $albumID;
         $result = mysql_query($query, $con);

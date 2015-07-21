@@ -28,12 +28,12 @@ and open the template in the editor.
                 } else {
                     mysql_select_db("hlog");
                     //judge whether the name exist:
-                    $query = "select username from userlogin where username='$input_name'";
+                    $query = "select username from userLogin where username='$input_name'";
                     $result = mysql_query($query, $con);
                     while ($row = mysql_fetch_array($result)) {
                         $user_exist = true;
                         //get password from mysql:
-                        $query = "select password from userlogin where username='$input_name'";
+                        $query = "select password from userLogin where username='$input_name'";
                         $result = mysql_query($query, $con);
                         while ($row = mysql_fetch_array($result)) {
                             $password = $row['password'];
@@ -43,7 +43,7 @@ and open the template in the editor.
                             echo "<script>alert('Wrong password!');</script>";
                         } else {
                             session_start();
-                            $query = "select userID from userlogin where username = '$input_name'";
+                            $query = "select userID from userLogin where username = '$input_name'";
                             $result = mysql_query($query, $con);
                             while ($row1 = mysql_fetch_array($result)) {
                                 $userID = $row1['userID'];

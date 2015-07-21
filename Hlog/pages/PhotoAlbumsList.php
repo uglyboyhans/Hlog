@@ -17,8 +17,8 @@ include '../PagePart/SessionInfo.php';
         <a href="Photos.php">All photos</a>&nbsp;
         <a href="UploadPhoto.php">Upload photo</a><br />
         <?php
-        $query = "select photoAlbums.name,photoAlbums.id,photoAlbums.cover,Photos.src,Photos.id as p_id "
-                . "from photoAlbums,Photos "
+        $query = "select photoAlbums.name,photoAlbums.id,photoAlbums.cover,photos.src,photos.id as p_id "
+                . "from photoAlbums,photos "
                 . "where photoAlbums.cover=photos.id "
                 . "and photoAlbums.author=" . $login_ID;
         $result = mysql_query($query, $con);

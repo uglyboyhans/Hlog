@@ -17,7 +17,7 @@ include '../PagePart/SessionInfo.php';
         <a href="UploadPhoto.php">Upload Photo</a>
         <div id="photoAlbumList">
             <?php
-            $query = "select id,name from photoalbums where author=" . $login_ID;
+            $query = "select id,name from photoAlbums where author=" . $login_ID;
             $result = mysql_query($query, $con);
             while ($row = mysql_fetch_array($result)) {
                 if (!empty($row["id"])) {

@@ -11,7 +11,7 @@ if ($newName !== "") {
         die("Could not connect:" . mysql_error());
     } else {
         mysql_select_db("hlog", $con);
-        $query="update photoalbums set name='$newName' where id=".$albumID;
+        $query="update photoAlbums set name='$newName' where id=".$albumID;
         if(mysql_query($query,$con)){
             mysql_close($con);
             echo "<script>"

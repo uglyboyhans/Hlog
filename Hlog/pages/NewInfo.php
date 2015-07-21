@@ -19,7 +19,7 @@ include '../PagePart/SessionInfo.php';
         <a href="Letters.php">letter</a>&nbsp;
         <br />
         <?php
-        $query = "select id,infoType,relyID,addTime from NewInfo where userID=$login_ID order by id desc";
+        $query = "select id,infoType,relyID,addTime from newInfo where userID=$login_ID order by id desc";
         $result_newInfo = mysql_query($query, $con);
         while ($row_newInfo = mysql_fetch_array($result_newInfo)) {
             //use "if else" get infoType to know how echo:
@@ -40,7 +40,7 @@ include '../PagePart/SessionInfo.php';
                                 . $row_comment["content"]
                                 . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
-                        echo " <br /><a href='#' onclick='readBlog(" . $row_comment["relyID"] . ")'>Check</a>";
+                        echo " <br /><a href='javascript:;' onclick='readBlog(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }else if($row_comment["ObType"]==="photo"){
                         $query="select name from photos where id=". $row_comment["relyID"];
@@ -52,7 +52,7 @@ include '../PagePart/SessionInfo.php';
                                 . $row_comment["content"]
                                 . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
-                        echo " <br /><a href='#' onclick='viewPhoto(" . $row_comment["relyID"] . ")'>Check</a>";
+                        echo " <br /><a href='javascript:;' onclick='viewPhoto(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }else if($row_comment["ObType"]==="feeling"){
                         $query="select article from feelings where id=". $row_comment["relyID"];
@@ -64,14 +64,22 @@ include '../PagePart/SessionInfo.php';
                                 . $row_comment["content"]
                                 . "\"<br />";
                         echo "..........".$row_newInfo["addTime"];
-                        echo "<br /> <a href='#' onclick='readFeeling(" . $row_comment["relyID"] . ")'>Check</a>";
+                        echo "<br /> <a href='javascript:;' onclick='readFeeling(" . $row_comment["relyID"] . ")'>Check</a>";
                         echo "<hr />";
                     }
                 }
             } else if ($row_newInfo["infoType"] === "reply") {
                 
             } else if ($row_newInfo["infoType"] === "message") {
-                
+                $query="select userInfo.name from message,userInfo "
+                        . "where message.visitor=userInfo.userID and message.userID=$login_ID";
+                $result_msg=  mysql_query($query,$con);
+                while ($row_msg = mysql_fetch_array($result_msg)) {
+                    echo $row_msg["name"]." send a message to you.<br />";
+                    echo "<a href='javascript:;' onclick='MsgBoard($login_ID)'>Check</a>";
+                    echo "<br />..........".$row_newInfo["addTime"];
+                    echo "<hr />";
+                }
             } else if ($row_newInfo["infoType"] === "letter") {
                 
             }
